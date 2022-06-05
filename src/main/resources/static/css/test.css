@@ -1,0 +1,7 @@
+@font-face {
+    src: url("../fonts/poppins/BMJUA_ttf.ttf");
+    font-family: "jua";
+}
+p {
+    font-family: "jua";
+}
