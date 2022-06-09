@@ -14,10 +14,10 @@ import java.io.IOException;
 @Component //싱글톤 방식으로 빈을 생성
 public class SendKakaoTalk {
     // 강수량이 있다면 우산챙기라는 메세지를 보냄
-    @Scheduled(cron= "20 26 21 * * *")
+    @Scheduled(cron= "0 43 9 * * *")
     public void test4() throws IOException, ParseException {
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/weatherAPI3";
@@ -37,7 +37,7 @@ public class SendKakaoTalk {
     @Scheduled(cron= "50 26 21 * * *")
     public void test5() throws IOException, ParseException {
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/weatherAPI3";
@@ -57,7 +57,7 @@ public class SendKakaoTalk {
     @Scheduled(cron= "20 21 21 * * *")
     public void test6() throws IOException, ParseException {
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/weatherAPI4";

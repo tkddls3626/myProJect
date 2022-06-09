@@ -1,9 +1,21 @@
 <%@ page import="java.util.List" %>
+<%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.NoticeDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
 <%
-    List<String> rList = (List<String>) request.getAttribute("rList");
+    session.setAttribute("SESSION_USER_ID", "user_id"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+
+    List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
+
+
+    //게시판 조회 결과 보여주기
+    if (rList == null) {
+        rList = new ArrayList<NoticeDTO>();
+
+    }
 %>
 <!DOCTYPE HTML>
 
@@ -11,6 +23,14 @@
 
 <head>
     <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <script type="text/javascript">
+
+        //상세보기 이동
+        function doDetail(seq) {
+            location.href = "/notice/NoticeInfo?nSeq=" + seq;
+        }
+
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -185,8 +205,9 @@
                                         <div class="col-12">
                                         </div>
                                         <div class="col-4 col-12-medium">
-                                            <section>
+
                                                 <div class="divTable blueTable">
+
                                                     <div class="divTableHeading">
                                                         <div class="divTableRow">
                                                             <div class="divTableHead" id="" style="width: 10%;">번호</div>
@@ -197,25 +218,33 @@
                                                             <div class="divTableHead" style="width: 10%;">좋아요</div>
                                                         </div>
                                                     </div>
+                                                    <%
+                                                        for (int i = 0; i < rList.size(); i++) {
+                                                            NoticeDTO rDTO = rList.get(i);
+
+                                                            if (rDTO == null) {
+                                                                rDTO = new NoticeDTO();
+                                                            }
+
+                                                    %>
                                                     <div class="divTableBody">
                                                         <div class="divTableRow">
-                                                            <div class="divTableCell">cell1_1</div>
-                                                            <div class="divTableCell">cell2_1</div>
-                                                            <div class="divTableCell">cell3_1</div>
-                                                            <div class="divTableCell">cell4_1</div>
-                                                            <div class="divTableCell">cell5_1</div>
-                                                            <div class="divTableCell">cell6_1</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                            <div class="divTableCell"><%=rDTO.getNotice_seq()%></div>
+                                                            <div class="divTableCell"><%=rDTO.getTitle()%></div>
+                                                            <div class="divTableCell"><%=rDTO.getReg_id()%></div>
+                                                            <div class="divTableCell"><%=rDTO.getReg_dt()%></div>
+                                                            <div class="divTableCell"><%=rDTO.getNotice_cnt()%></div>
+                                                            <div class="divTableCell"><%=rDTO.getNotice_good()%></div>
 
-                                                <div class="blueTable outerTableFooter">
-                                                    <div class="tableFootStyle">
-                                                        <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
+                                                        </div>
+
                                                     </div>
+                                                    <%
+                                                        }
+                                                    %>
                                                 </div>
-                                                <button type="button"  onclick="location.href='NoticeReg'" style="background-color: #333333; float: right;">글쓰기</button>
-                                            </section>
+                                                <button type="button"  onclick="location.href='NoticeReg2'" style="background-color: #333333; float: right;">글쓰기</button>
+
                                         </div>
                                 </section>
                             </div>

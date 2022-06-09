@@ -52,18 +52,23 @@ public class UserInfoController {
             String password = CmmUtil.nvl(request.getParameter("password")); //비밀번호
             String age = CmmUtil.nvl(request.getParameter("age")); //나이
             String sex = CmmUtil.nvl(request.getParameter("sex")); //성별
+            String str = user_email;
+            String user_id = str.substring(0,str.indexOf("@"));
 
-            log.info("user_seq" + user_seq);
-            log.info("user_email" + user_email);
-            log.info("user_name" + user_name);
-            log.info("password" + password);
-            log.info("age" + age);
-            log.info("sex" + sex);
+
+            log.info("user_seq : " + user_seq);
+            log.info("user_email : " + user_email);
+            log.info("user_name : " + user_name);
+            log.info("password : " + password);
+            log.info("age : " + age);
+            log.info("sex : " + sex);
+            log.info("user_id : " + user_id);
 
             //저장할 변수 메모리에 올리기
             pDTO = new UserInfoDTO();
             pDTO.setUser_seq(user_seq);
             pDTO.setUser_email(user_email);
+            pDTO.setUser_id(user_id);
             pDTO.setUser_name(user_name);
             pDTO.setUser_email(user_email);
             pDTO.setPassword(EncryptUtil.encHashSHA256(password));
@@ -95,36 +100,41 @@ public class UserInfoController {
                                     @RequestParam Map<String, String> map) throws Exception {
         log.info(this.getClass().getName() + "getUsetLoginCheck Start!!");
         //로그인 성공 :1, 실패:0, 시스템에러:2
-        int res = 0;
         String resultMsg = "";
+        UserInfoDTO rDTO = new UserInfoDTO();
 
         //회원정보 입력화면에서 받는 정보를 저장할 변수
         UserInfoDTO pDTO = null;
 
         try {
             String user_email = map.get("user_email");
+            String user_id = map.get("user_id");
             String password = map.get("password");
 
             log.info("user_email :" + user_email);
             log.info("password :" + password);
+            log.info("user_id : " + user_id);
 
             pDTO = new UserInfoDTO();
 
             pDTO.setUser_email(user_email);
             pDTO.setPassword(EncryptUtil.encHashSHA256(password));
+            pDTO.setUser_id(user_id);
 
-            res = userInfoService.getUserLoginCheck(pDTO);
-            log.info("로그인 조회 결과는 : " + res);
+            rDTO = userInfoService.getUserLoginCheck(pDTO);
+            log.info("로그인 조회 결과는 : " + rDTO);
 
 
-            if (res == 1) { //로그인 성공
+            if (rDTO.getUser_seq() != null ) { //로그인 성공
+                String user_name = rDTO.getUser_name();
                 session.setAttribute("SS_USER_EMAIL", user_email);
+                session.setAttribute("SS_USER_NAME", user_name);
+                session.setAttribute("SS_USER_NAME", user_name);
                 resultMsg = "success";
-            } else if (res == 0) {
+            } else {
                 resultMsg = "fail";
             }
         } catch (Exception e) {
-            res = 2;
             //저장이 실패되면 사용자에게 보여줄 메세지
             log.info(e.toString());
             e.printStackTrace();
@@ -140,43 +150,36 @@ public class UserInfoController {
 
         String msg = "";
         String url = "";
+        String icon = "";
+        String contents = "";
 
         try {
             // 이메일 AES-128-CBC 암호화
-            String user_email = EncryptUtil.encAES128CBC(CmmUtil.nvl(request.getParameter("user_email")));
             String user_name = CmmUtil.nvl(request.getParameter("user_name"));
-
-
-            log.info("user_email : " + user_email);
-            log.info("user_name : " + user_name);
+            String age = CmmUtil.nvl(request.getParameter("age"));
 
             UserInfoDTO pDTO = new UserInfoDTO();
+
             pDTO.setUser_name(user_name);
-            pDTO.setUser_email(user_email);
+            pDTO.setAge(age);
+            log.info("user_name : " + user_name);
+            log.info("age : " + age);
 
-            UserInfoDTO uDTO = userInfoService.findUserId(pDTO);
+            UserInfoDTO rDTO = userInfoService.findUserId(pDTO);
 
-            if (uDTO != null) {
-
-                MailDTO rDTO = new MailDTO();
-                rDTO.setToMail(EncryptUtil.decAES128CBC(user_email)); //이메일전송을위해 복호화
-                rDTO.setTitle("#####" + user_name + "의 아이디 발송!!!");
-                rDTO.setContents("아이디 전송 : " + user_email);
-
-                int mailRes = mailService.doSendMail(rDTO);
-
-                if (mailRes == 1) {
-                    msg = "아이디를 이메일로 발송했습니다." + user_name + "님의 ID는" + user_email + "입니다.";
-                    ;
-                } else {
-                    msg = "아이디발송에 실패했습니다. ####@naver.com 으로 문의해주세요.";
-                }
-                url = "/login";
-
+            log.info("rDTO : " + rDTO);
+            if (rDTO != null) {
+                String user_email = rDTO.getUser_email();
+                msg = "이메일 찾기 성공!";
+                icon = "success";
+                contents = "해당하는 이메일은 : " + user_email;
             } else {
-                msg = "정보를 다시 확인해주세요.";
-                url = "/forget_id";
+                msg = "이메일 찾기 실패!";
+                icon = "warning";
+                contents = "이름과 나이를 확인해주세요.";
             }
+            url = "/login";
+
 
         } catch (Exception e) {
             msg = "서버 오류입니다.";
@@ -187,11 +190,142 @@ public class UserInfoController {
 
         model.addAttribute("msg", msg);
         model.addAttribute("url", url);
+        model.addAttribute("icon", icon);
+        model.addAttribute("contents",contents);
 
         log.info(this.getClass().getName() + ".findPw end!");
 
+        return "/alert";
+    }
+    // 유저 비밀번호 찾기 --> 새비밀번호 전송 (비밀번호를모를때)
+    @PostMapping(value = "forget_passwd")
+    public String findPw(HttpServletRequest request, ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".findPw start!");
+
+        String msg = "";
+        String url = "";
+        String icon = "";
+        String contents = "";
+
+        try {
+
+            String newPW = String.valueOf((int) (Math.random() * 1000000));
+
+            // 이메일 AES-128-CBC 암호화
+            String user_email = CmmUtil.nvl(request.getParameter("user_email"));
+            String user_name = CmmUtil.nvl(request.getParameter("user_name"));
+            // 비밀번호 해시 알고리즘 암호화
+            String user_pw = EncryptUtil.encHashSHA256(newPW);
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setPassword(user_pw);
+            pDTO.setUser_name(user_name);
+            pDTO.setUser_email(user_email);
+            log.info("user_email : " + user_email);
+            log.info("user_name : " + user_name);
+            log.info("user_pw : " + user_pw);
+
+            int res = userInfoService.updateUserPw(pDTO);
+            log.info("res : " + res);
+
+            if (res == 1) {
+
+                MailDTO rDTO = new MailDTO();
+                rDTO.setToMail(user_email);
+                log.info("email : " + user_email  );
+                rDTO.setTitle("######의 새비밀번호 전송!!!");
+                rDTO.setContents("새 비밀번호 : " + newPW);
+                log.info("newPW : " + newPW);
+
+                int mailRes = mailService.doSendMail(rDTO);
+
+                if (mailRes == 1) {
+                    msg = "비밀 번호 변경 성공!";
+                    icon = "success";
+                    contents = "새 비밀번호를 이메일로 발송했습니다. 로그인 후 변경해주세요.";
+                } else {
+                    msg = "비밀 번호 변경 실패!";
+                    icon = "warning";
+                    contents = "변경된 비밀번호 발송에 실패했습니다. ####@naver.com 으로 문의해주세요.";
+                }
+                url = "/login";
+
+            } else if (res == 0) {
+                msg = "정보를 다시 확인해주세요.";
+                icon = "warning";
+                contents = "정확한 정보를 입력해주세요!";
+            }
+
+        } catch (Exception e) {
+            msg = "서버 오류입니다.";
+            icon = "warning";
+            contents = "서버 오류입니다 관리자에게 문의해주세요";
+            log.info(e.toString());
+            e.printStackTrace();
+        }
+
+        model.addAttribute("msg", msg);
+        log.info(url);
+        model.addAttribute("url", url);
+        model.addAttribute("icon", icon);
+        model.addAttribute("contents",contents);
+
+        log.info(this.getClass().getName() + ".findPw end!");
+
+        return "alert";
+    }
+    // 유저 패스워드 변경로직
+    @PostMapping(value = "updateUserPw")
+    public String updateUserPw(HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".updateUserPw start");
+
+        String msg = "";
+        String url = "";
+
+        try {
+
+            // 이메일 AES-128-CBC 암호화
+            String user_email = CmmUtil.nvl((String)request.getParameter("user_email"));
+            String user_name = CmmUtil.nvl((String) request.getParameter("user_name"));
+            // 비밀번호 해시 알고리즘 암호화
+            String user_pw = EncryptUtil.encHashSHA256(CmmUtil.nvl(request.getParameter("user_pw")));
+
+            log.info("user_email : " + user_email);
+            log.info("user_name : " + user_name);
+
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setPassword(user_pw);
+            pDTO.setUser_name(user_name);
+            pDTO.setUser_email(user_email);
+
+
+            int res = userInfoService.updateUserPw(pDTO);
+
+            if (res == 1) {
+                msg = "성공적으로 비밀번호를 변경했습니다. 다시 로그인 해주세요";
+                url = "/index";
+            } else {
+                msg = "비밀번호 저장에 실패했습니다.";
+                url = "/updatePwPage";
+            }
+
+        } catch (Exception e) {
+            // 저장 실패 시
+            msg = "서버 오류입니다.";
+            url = "/updatePwPage";
+            log.info(e.toString());
+            e.printStackTrace();
+        }
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("url", url);
+
+        log.info(this.getClass().getName() + ".updateUserPw end");
+
         return "/redirect";
     }
-
 
 }

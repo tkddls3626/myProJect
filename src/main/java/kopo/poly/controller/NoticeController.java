@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -28,32 +27,13 @@ import java.util.List;
 @Controller
 public class NoticeController {
 
-    /*
-
-     * 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
-     */
     @Resource(name = "NoticeService")
     private INoticeService noticeService;
 
     /**
-     * GetMapping은 GET방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
-     * PostMapping은 POST방식을 통해 접속되는 URL 호출에 대해 실행되는 함수로 설정함을 의미함
-     * GetMapping(value = "index") =>  GET방식을 통해 접속되는 URL이 index인 경우 아래 함수를 실행함
-     */
-
-    /**
      * 게시판 리스트 보여주기
-     *
-     * GetMapping(value = "notice/NoticeList") =>  GET방식을 통해 접속되는 URL이 notice/NoticeList인 경우 아래 함수를 실행함
      */
-
-    // 로그인 사이트 들어가기
     @GetMapping(value = "notice/NoticeList2")
-    public String NoticeListMain() {
-        log.info(this.getClass().getName() + "loginStart");
-        return "notice/NoticeList2";
-    }
-    @GetMapping(value = "notice/NoticeList")
     public String NoticeList(ModelMap model)
             throws Exception {
 
@@ -62,9 +42,10 @@ public class NoticeController {
 
         // 공지사항 리스트 가져오기
         List<NoticeDTO> rList = noticeService.getNoticeList();
+        log.info("가져온 공지사항 리스트 값 : " + rList.size() );
 
         if (rList == null) {
-            rList = new ArrayList<>();
+            rList = new ArrayList<NoticeDTO>();
 
         }
 
@@ -75,46 +56,43 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeList end!");
 
         // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
-        return "/notice/NoticeList";
+        return "/notice/NoticeList2";
 
     }
 
-    /**
-     * 게시판 작성 페이지 이동
-     *
-     * 이 함수는 게시판 작성 페이지로 접근하기 위해 만듬. WEB-INF 밑에 존재하는 JSP는 직접 호출할 수 없음 따라서 WEB-INF 밑에
-     * 존재하는 JSP를 호출하기 위해서는 반드시 Controller 등록해야함
-     *
-     * GetMapping(value = "notice/NoticeReg") =>  GET방식을 통해 접속되는 URL이 notice/NoticeReg인 경우 아래 함수를 실행함
-     */
-    @GetMapping(value = "notice/NoticeReg")
+   // 게시글 작성
+    @GetMapping(value = "notice/NoticeReg2")
     public String NoticeReg() {
 
         log.info(this.getClass().getName() + ".NoticeReg start!");
 
         log.info(this.getClass().getName() + ".NoticeReg end!");
 
-        return "/notice/NoticeReg";
+        return "/notice/NoticeReg2";
     }
 
     /**
      * 게시판 글 등록
      */
-    @PostMapping(value = "notice/NoticeInsert")
+    @GetMapping(value = "notice/NoticeInsert")
     public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeInsert start!");
 
         String msg = "";
+        String url = "";
+        String icon = "";
+        String contents = "";
 
         try {
             /*
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
              */
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
+            String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+            String reg_id = CmmUtil.nvl(request.getParameter("reg_id"));
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
-            String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+            String notice_yn = CmmUtil.nvl(request.getParameter("notice_yn")); // 공지글 여부
+            String notice_contents = CmmUtil.nvl(request.getParameter("notice_contents")); // 내용
 
             /*
              * ####################################################################################
@@ -122,28 +100,38 @@ public class NoticeController {
              * ####################################################################################
              */
             log.info("user_id : " + user_id);
+            log.info("reg_id : " + reg_id);
             log.info("title : " + title);
-            log.info("noticeYn : " + noticeYn);
-            log.info("contents : " + contents);
+            log.info("noticeYn : " + notice_yn);
+            log.info("contents : " + notice_contents);
 
             NoticeDTO pDTO = new NoticeDTO();
 
             pDTO.setUser_id(user_id);
-            pDTO.setNotice_name(title);
-            pDTO.setNotice_yn(noticeYn);
-            pDTO.setNotice_contents(contents);
+            pDTO.setTitle(title);
+            pDTO.setNotice_yn(notice_yn);
+            pDTO.setNotice_contents(notice_contents);
+            pDTO.setReg_id(reg_id);
 
-            /*
-             * 게시글 등록하기위한 비즈니스 로직을 호출
-             */
-            noticeService.InsertNoticeInfo(pDTO);
+
+//            /*
+//             * 게시글 등록하기위한 비즈니스 로직을 호출
+//             */
+            int res = noticeService.InsertNoticeInfo(pDTO);
+            log.info("reg_id : " + reg_id);
 
             // 저장이 완료되면 사용자에게 보여줄 메시지
-            msg = "등록되었습니다.";
-
-
+            if(res == 1) {
+                msg = "저장되었습니다..";
+                icon = "success";
+                contents = "게시판으로 이동";
+            } else {
+                msg = "저장에 실패하였습니다...";
+                icon = "fail";
+                contents = "게시판으로 이동";
+            }
+            url = "/notice/NoticeList2";
         } catch (Exception e) {
-
             // 저장이 실패되면 사용자에게 보여줄 메시지
             msg = "실패하였습니다. : " + e.getMessage();
             log.info(e.toString());
@@ -151,13 +139,14 @@ public class NoticeController {
 
         } finally {
             log.info(this.getClass().getName() + ".NoticeInsert end!");
-
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
-
+            model.addAttribute("url", url);
+            model.addAttribute("icon", icon);
+            model.addAttribute("contents", contents);
         }
 
-        return "/notice/MsgToList";
+        return "/alert";
     }
 
     /**
@@ -226,7 +215,7 @@ public class NoticeController {
     /**
      * 게시판 수정 보기
      */
-    @GetMapping(value = "notice/NoticeEditInfo")
+    @GetMapping(value = "notice/NoticeEditInfo2")
     public String NoticeEditInfo(HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeEditInfo start!");
@@ -273,13 +262,13 @@ public class NoticeController {
 
         log.info(this.getClass().getName() + ".NoticeEditInfo end!");
 
-        return "/notice/NoticeEditInfo";
+        return "/notice/NoticeEditInfo2";
     }
 
     /**
      * 게시판 글 수정
      */
-    @PostMapping(value = "notice/NoticeUpdate")
+    @GetMapping(value = "notice/NoticeUpdate")
     public String NoticeUpdate(HttpSession session, HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeUpdate start!");
@@ -292,21 +281,21 @@ public class NoticeController {
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
-            String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+            String notice_contents = CmmUtil.nvl(request.getParameter("notcie_contents")); // 내용
 
             log.info("user_id : " + user_id);
             log.info("nSeq : " + nSeq);
             log.info("title : " + title);
             log.info("noticeYn : " + noticeYn);
-            log.info("contents : " + contents);
+            log.info("contents : " + notice_contents);
 
             NoticeDTO pDTO = new NoticeDTO();
 
             pDTO.setUser_id(user_id);
             pDTO.setNotice_seq(nSeq);
-            pDTO.setNotice_name(title);
+            pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
-            pDTO.setNotice_contents(contents);
+            pDTO.setNotice_contents(notice_contents);
 
             // 게시글 수정하기 DB
             noticeService.updateNoticeInfo(pDTO);
