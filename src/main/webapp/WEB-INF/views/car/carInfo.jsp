@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/car.css" />
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b596c8e6e2eb1dc9d160e1a1319a1587"></script>
     <style type="text/css">
         @font-face {
             src: url("/fonts/poppins/BMJUA_ttf.ttf");
@@ -62,7 +63,7 @@
                                 <ul>
                                     <li><a href="#">채팅내역</a></li>
                                     <li><a href="#">카카오톡 알림 신청</a></li>
-                                    <li><a href="#">내 정보 수정</a></li>
+                                    <li><a href="/mypage">내 정보 수정</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">
@@ -106,9 +107,10 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <img src="<%=rList.get(5)%>">
-                                            <%for(int i=0; i<rList.size()-1; i++) {%>
+                                            <%for(int i=0; i<rList.size()-3; i++) {%>
                                             <h2><%=rList.get(i)%></h2>
                                             <%}%>
+                                            <div id="map" style="width:50%;height:400px; margin-left: auto; margin-right: auto;"></div>
                                         </div>
                                         <div class="col-4 col-12-medium">
                                             <section>
@@ -134,6 +136,31 @@
 <script src="/js/breakpoints.min.js"></script>
 <script src="/js/util.js"></script>
 <script src="/js/main.js"></script>
+<script>
+    // 지도를 표시할 div
+    let mapContainer = document.getElementById('map'),
+        mapOption = {
+            // 지도의 중심좌표
+            center: new kakao.maps.LatLng(<%=rList.get(7)%>, <%=rList.get(6)%>),
+            // 지도의 확대 레벨(1~14) 값이 클 수록 지도가 축소 되어 보임.
+            level: 5
+        };
+
+    // 지도를 표시할 div와 지도 옵션으로 지도를 생성.
+    let map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+    // 마커가 표시될 위치.
+    let markerPosition  = new kakao.maps.LatLng(<%=rList.get(7)%>, <%=rList.get(6)%>);
+
+    // 마커를 생성.
+    let marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커를 해당 위치에 설정
+    marker.setMap(map);
+</script>
 </body>
 
 </html>
