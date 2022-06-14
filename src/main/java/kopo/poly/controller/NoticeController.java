@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class NoticeController {
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".NoticeList end!");
 
-        // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
+
         return "/notice/NoticeList2";
 
     }
@@ -152,64 +153,63 @@ public class NoticeController {
     /**
      * 게시판 상세보기
      */
-    @GetMapping(value = "notice/NoticeInfo")
-    public String NoticeInfo(HttpServletRequest request, ModelMap model) {
+    /**
+     * 게시판 상세보기
+     */
+    @GetMapping(value = "notice/NoticeInfo2")
+    public String NoticeInfo(HttpSession session,HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws Exception {
 
         log.info(this.getClass().getName() + ".NoticeInfo start!");
 
-        String msg = "";
+        /*
+         * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
+         */
 
-        try {
-            /*
-             * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
-             */
-            String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 공지글번호(PK)
+        String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 공지글번호(PK)
 
-            /*
-             * ####################################################################################
-             * 반드시, 값을 받았으면, 꼭 로그를 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
-             * ####################################################################################
-             */
-            log.info("nSeq : " + nSeq);
+        /*
+         * ####################################################### 반드시, 값을 받았으면, 꼭 로그를
+         * 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
+         * #######################################################
+         */
+        log.info("nSeq : " + nSeq);
 
-            /*
-             * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
-             */
-            NoticeDTO pDTO = new NoticeDTO();
-            pDTO.setNotice_seq(nSeq);
+        /*
+         * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
+         */
+        NoticeDTO pDTO = new NoticeDTO();
 
-            // 공지사항 상세정보 가져오기
-            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+        pDTO.setNotice_seq(nSeq);
 
-            if (rDTO == null) {
-                rDTO = new NoticeDTO();
+        log.info("read_cnt update success!!!");
 
-            }
-
-            log.info("getNoticeInfo success!!!");
-
-            // 조회된 리스트 결과값 넣어주기
-            model.addAttribute("rDTO", rDTO);
+        // 공지사항 상세정보 가져오기
+        NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+        session.setAttribute("reg_id", rDTO.getReg_id());
 
 
-        } catch (Exception e) {
-
-            // 저장이 실패되면 사용자에게 보여줄 메시지
-            msg = "실패하였습니다. : " + e.getMessage();
-            log.info(e.toString());
-            e.printStackTrace();
-
-        } finally {
-            log.info(this.getClass().getName() + ".NoticeInsert end!");
-
-            // 결과 메시지 전달하기
-            model.addAttribute("msg", msg);
+        if (rDTO == null) {
+            log.info("rDTO가 널임");
+            rDTO = new NoticeDTO();
 
         }
+        log.info("reg_id : " + rDTO.getReg_id());
+
+        log.info("getNoticeInfo success!!!");
+
+        // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("rDTO", rDTO);
+        model.addAttribute("reg_id",rDTO.getReg_id());
+
+
+        // 변수 초기화(메모리 효율화 시키기 위해 사용함)
+        rDTO = null;
+        pDTO = null;
 
         log.info(this.getClass().getName() + ".NoticeInfo end!");
 
-        return "/notice/NoticeInfo";
+        return "/notice/NoticeInfo2";
     }
 
     /**
@@ -274,16 +274,19 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeUpdate start!");
 
         String msg = "";
+        String icon = "";
+        String contents = "";
+        String url = "";
 
         try {
 
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID")); // 아이디
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
-            String notice_contents = CmmUtil.nvl(request.getParameter("notcie_contents")); // 내용
+            String notice_contents = CmmUtil.nvl(request.getParameter("notice_contents")); // 내용
+            String chg_id = CmmUtil.nvl( request.getParameter("chg_id")); // 아이디
 
-            log.info("user_id : " + user_id);
+            log.info("chg_id : " + chg_id);
             log.info("nSeq : " + nSeq);
             log.info("title : " + title);
             log.info("noticeYn : " + noticeYn);
@@ -291,7 +294,7 @@ public class NoticeController {
 
             NoticeDTO pDTO = new NoticeDTO();
 
-            pDTO.setUser_id(user_id);
+            pDTO.setChg_id(chg_id);
             pDTO.setNotice_seq(nSeq);
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
@@ -299,11 +302,16 @@ public class NoticeController {
 
             // 게시글 수정하기 DB
             noticeService.updateNoticeInfo(pDTO);
-
-            msg = "수정되었습니다.";
-
+            if (pDTO != null) {
+                msg = "수정되었습니다.";
+                icon = "success";
+                contents = "게시판으로 이동";
+                url = "/notice/NoticeList2";
+            }
         } catch (Exception e) {
-            msg = "실패하였습니다. : " + e.getMessage();
+            msg = "수정 실패 하였습니다.";
+            icon = "fail";
+            contents = "게시판으로 이동";
             log.info(e.toString());
             e.printStackTrace();
 
@@ -312,10 +320,13 @@ public class NoticeController {
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
-
+            log.info(url);
+            model.addAttribute("url", url);
+            model.addAttribute("icon", icon);
+            model.addAttribute("contents",contents);
         }
 
-        return "/notice/MsgToList";
+        return "/alert";
     }
 
     /**
@@ -327,6 +338,9 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".NoticeDelete start!");
 
         String msg = "";
+        String url = "";
+        String icon = "";
+        String contents = "";
 
         try {
 
@@ -338,13 +352,19 @@ public class NoticeController {
 
             pDTO.setNotice_seq(nSeq);
 
-            // 게시글 삭제하기 DB
-            noticeService.deleteNoticeInfo(pDTO);
+            if(nSeq != null) {
+                // 게시글 삭제하기 DB
+                noticeService.deleteNoticeInfo(pDTO);
 
-            msg = "삭제되었습니다.";
-
+                msg = "삭제되었습니다.";
+                icon = "success";
+                contents = "게시판으로 이동";
+                url = url = "/notice/NoticeList2";
+            }
         } catch (Exception e) {
             msg = "실패하였습니다. : " + e.getMessage();
+            icon = "fail";
+            contents = "삭제되지 않았습니다.";
             log.info(e.toString());
             e.printStackTrace();
 
@@ -353,10 +373,13 @@ public class NoticeController {
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
+            model.addAttribute("icon", icon);
+            model.addAttribute("contents", contents);
+            model.addAttribute("url", url);
 
         }
 
-        return "/notice/MsgToList";
+        return "/alert";
     }
 
 }

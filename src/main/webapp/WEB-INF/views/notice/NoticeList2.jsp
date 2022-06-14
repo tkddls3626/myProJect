@@ -6,8 +6,8 @@
          pageEncoding="UTF-8"%>
 
 <%
-    session.setAttribute("SESSION_USER_ID", "user_id"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
 
+    String admin = CmmUtil.nvl((String)session.getAttribute("SS_USER_TYPE"));
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
 
 
@@ -24,6 +24,7 @@
 <head>
     <title>Right Sidebar - ZeroFour by HTML5 UP</title>
     <script type="text/javascript">
+        <aTag_PageMove></aTag_PageMove>
 
         //상세보기 이동
         function doDetail(seq) {
@@ -156,9 +157,10 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="#">채팅내역</a></li>
+                                    <li><a href="/chat">채팅내역</a></li>
                                     <li><a href="#">카카오톡 알림 신청</a></li>
-                                    <li><a href="#">내 정보 수정</a></li>
+                                    <li><a href="/mypage">내 정보 수정</a></li>
+                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">
@@ -196,9 +198,6 @@
                                             <h2 style="margin: 0 0 0.5em 0;">공지사항 및 자유게시판</h2>
                                         </header>
                                     </div>
-                                    <div>
-                                        <button type="button" style="background-color: #333333; float: right;">글삭제</button>
-                                    </div>
                                 </article>
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
@@ -226,18 +225,25 @@
                                                                 rDTO = new NoticeDTO();
                                                             }
 
+                                                            String nSeq = rDTO.getNotice_seq();
                                                     %>
                                                     <div class="divTableBody">
-                                                        <div class="divTableRow">
-                                                            <div class="divTableCell"><%=rDTO.getNotice_seq()%></div>
-                                                            <div class="divTableCell"><%=rDTO.getTitle()%></div>
+
+                                                        <div class="divTableRow" >
+                                                            <div class="divTableCell">
+                                                                <a href="/notice/NoticeInfo2?nSeq=<%=nSeq%>"><%=nSeq%>
+                                                                </a>
+                                                            </div>
+                                                            <div class="divTableCell">
+                                                                <a href="/notice/NoticeInfo2?nSeq=<%=nSeq%>">
+                                                                <%=rDTO.getTitle()%>
+                                                                </a>
+                                                            </div>
                                                             <div class="divTableCell"><%=rDTO.getReg_id()%></div>
                                                             <div class="divTableCell"><%=rDTO.getReg_dt()%></div>
                                                             <div class="divTableCell"><%=rDTO.getNotice_cnt()%></div>
                                                             <div class="divTableCell"><%=rDTO.getNotice_good()%></div>
-
                                                         </div>
-
                                                     </div>
                                                     <%
                                                         }

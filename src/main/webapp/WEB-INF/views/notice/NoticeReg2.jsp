@@ -5,6 +5,11 @@
 
 <%
     String user_name = CmmUtil.nvl((String) session.getAttribute("SS_USER_NAME"));
+    String admin = CmmUtil.nvl((String)session.getAttribute("SS_USER_TYPE"));
+
+    if (admin != null){
+
+    }
 %>
 <!DOCTYPE HTML>
 
@@ -61,9 +66,10 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="#">채팅내역</a></li>
+                                    <li><a href="/chat">채팅내역</a></li>
                                     <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
+                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">
@@ -139,8 +145,8 @@
                                                                 </div>
                                                                 <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="내용을 입력하세요"></textarea>
                                                             </div>
-                                                        <button type ="button" onclick="location.href='/notice/NoticeList2'" id="morla">취소</button>
-                                                        <button type="submit" class="btn btn-primary" id="btn-save">등록</button>
+                                                        <button type ="button" onclick="location.href='/notice/NoticeList2'" id="back">취소</button>
+                                                        <button type="submit" class="btn btn-primary" id="insert">등록</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -165,4 +171,6 @@
 </body>
 
 </html>
-//TODO 회원정보 수정 삭제 하기
+<!--
+TODO 회원정보 수정 삭제 하기
+!-->
