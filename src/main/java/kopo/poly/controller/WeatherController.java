@@ -22,7 +22,7 @@ public class WeatherController {
         log.info(this.getClass().getName() + "loginStart");
         log.info(this.getClass().getName()+"날씨 데이터 파싱 시작!");
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/weatherAPI";
@@ -52,7 +52,7 @@ public class WeatherController {
         log.info(this.getClass().getName() + "loginStart");
         log.info(this.getClass().getName()+"날씨 데이터 파싱 시작!");
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/weatherAPI2";

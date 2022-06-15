@@ -25,6 +25,47 @@
         function doDetail(seq) {
             location.href = "/notice/NoticeInfo?nSeq=" + seq;
         }
+        //전송시 유효성 체크
+        function doSubmit(f){
+            if(f.title.value === ""){
+                alert("제목을 입력하시기 바랍니다.");
+                f.title.focus();
+                return false;
+            }
+
+            if(calBytes(f.title.value) > 200){
+                alert("최대 200Bytes까지 입력 가능합니다.");
+                f.title.focus();
+                return false;
+            }
+
+            var noticeCheck = false; //체크 여부 확인 변수
+
+            for(var i=0;i<f.noticeYn.length;i++){
+                if (f.noticeYn[i].checked){
+                    noticeCheck = true;
+                }
+            }
+
+            if(noticeCheck === false){
+                alert("공지글 여부를 선택하시기 바랍니다.");
+                f.noticeYn[0].focus();
+                return false;
+            }
+
+            if(f.contents.value === ""){
+                alert("내용을 입력하시기 바랍니다.");
+                f.contents.focus();
+                return false;
+            }
+
+            if(calBytes(f.contents.value) > 4000){
+                alert("최대 4000Bytes까지 입력 가능합니다.");
+                f.contents.focus();
+                return false;
+            }
+
+        }
 
     </script>
     <meta charset="utf-8" />

@@ -41,7 +41,7 @@ public class LoginController{
         /*초기 메인화면 차박여행지 3개 출력*/
         log.info(this.getClass().getName() + " 고캠핑 데이터 파싱 시작!");
 
-        poly.util.UrlUtil uu = new poly.util.UrlUtil();
+        kopo.poly.util.UrlUtil uu = new kopo.poly.util.UrlUtil();
 
         String url = "http://localhost:5002";
         String api = "/mainPageCarAPI";

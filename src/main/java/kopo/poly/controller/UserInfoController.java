@@ -1,5 +1,6 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.FriendDTO;
 import kopo.poly.dto.MailDTO;
 import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.service.IMailService;
@@ -52,8 +53,10 @@ public class UserInfoController {
             String password = CmmUtil.nvl(request.getParameter("password")); //비밀번호
             String age = CmmUtil.nvl(request.getParameter("age")); //나이
             String sex = CmmUtil.nvl(request.getParameter("sex")); //성별
+            String tlv_int = CmmUtil.nvl(request.getParameter("tlv_int")); // 관심지역
             String str = user_email;
             String user_id = str.substring(0,str.indexOf("@"));
+
 
 
             log.info("user_seq : " + user_seq);
@@ -63,6 +66,7 @@ public class UserInfoController {
             log.info("age : " + age);
             log.info("sex : " + sex);
             log.info("user_id : " + user_id);
+            log.info("tlv_int : " + tlv_int);
 
             //저장할 변수 메모리에 올리기
             pDTO = new UserInfoDTO();
@@ -74,6 +78,7 @@ public class UserInfoController {
             pDTO.setPassword(EncryptUtil.encHashSHA256(password));
             pDTO.setAge(age);
             pDTO.setSex(sex);
+            pDTO.setTlv_int(tlv_int);
 
             //회원가입
             int res = userInfoService.insertUserInfo(pDTO);
@@ -124,16 +129,26 @@ public class UserInfoController {
             rDTO = userInfoService.getUserLoginCheck(pDTO);
             log.info("로그인 조회 결과는 : " + rDTO);
 
+            //관리자 정보 관리 관리자 아이디 이메일로할시 세션에 이메일담고
+            //res_user_email.equals("admin@naver.com")
+            if (user_email.equals("admin")) {
+                session.setAttribute("SS_USER_TYPE", "admin");
+                log.info("ADMIN LOGIN");
+            }
 
-            if (rDTO.getUser_seq() != null ) { //로그인 성공
+            if (rDTO.getUser_seq() != null) { //로그인 성공
                 String user_name = rDTO.getUser_name();
+                String user_seq = rDTO.getUser_seq();
+                log.info("user_seq : " + user_seq);
                 session.setAttribute("SS_USER_EMAIL", user_email);
                 session.setAttribute("SS_USER_NAME", user_name);
-                session.setAttribute("SS_USER_NAME", user_name);
+                session.setAttribute("SS_USER_SEQ", user_seq);
                 resultMsg = "success";
-            } else {
+            }
+            else {
                 resultMsg = "fail";
             }
+
         } catch (Exception e) {
             //저장이 실패되면 사용자에게 보여줄 메세지
             log.info(e.toString());
@@ -327,5 +342,89 @@ public class UserInfoController {
 
         return "/redirect";
     }
+    //유저 삭제
+    @GetMapping(value = "deleteUser")
+    public String deleteUser(HttpSession session, ModelMap model) {
 
+        log.info(this.getClass().getName() + ".deleteUser start!");
+
+        String msg = "";
+        String url = "";
+
+        try {
+
+            // 이메일 AES-128-CBC 암호화
+            String user_email = CmmUtil.nvl((String) session.getAttribute("SS_USER_EMAIL"));
+            log.info("user_email : " + user_email);
+
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUser_email(user_email); //유저 아이디 DTO에 담아서 전달
+
+
+            int res = userInfoService.deleteUser(pDTO);
+            log.info("res 값은 ? : " + res);
+            if (res == 1) {
+                msg = "성공적으로 계정이 삭제 되었습니다.";
+                url = "/login";
+                // session 비움
+                session.invalidate();
+            } else {
+                msg = "회원탈퇴에 실패했습니다.";
+                url = "/index";
+            }
+
+        } catch (Exception e) {
+            // 유저 정보 삭제 실패 시
+            msg = "서버 오류입니다.";
+            url = "/index";
+            log.info(e.toString());
+            e.printStackTrace();
+        }
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("url", url);
+
+        log.info(this.getClass().getName() + ".deleteUser end!");
+
+        return "/alert";
+    }
+    @GetMapping(value = "/user/addFriend")
+    @ResponseBody
+    public String addFriend(HttpServletRequest request) throws Exception {
+
+        String user_seq = CmmUtil.nvl(request.getParameter("user_seq"));
+        String receive_user = CmmUtil.nvl(request.getParameter("receive_user"));
+
+        FriendDTO fDTO = new FriendDTO();
+
+        fDTO.setUser_seq(user_seq);
+        fDTO.setReceive_user(receive_user);
+
+        log.info("user_seq : " + user_seq);
+        log.info("receive_user : " + receive_user);
+
+        userInfoService.addFriend(fDTO);
+
+
+
+    return "success";
+    }
+    @GetMapping(value = "/user/friendCheck")
+    @ResponseBody
+    public String getUserSeq(HttpServletRequest request) throws Exception {
+        log.info(this.getClass().getName() + ".getUserSeq Controller Start !!");
+        String user_seq = CmmUtil.nvl(request.getParameter("user_seq"));
+        String receive_name = CmmUtil.nvl(request.getParameter("receive_user"));
+        log.info(user_seq);
+        log.info(receive_name);
+        FriendDTO fDTO = new FriendDTO();
+        fDTO.setUser_seq(user_seq);
+        fDTO.setReceive_user(receive_name);
+
+        userInfoService.friendCheck(fDTO);
+
+        log.info(this.getClass().getName() + ".getUserSeq Controller End !!");
+        return "success";
+    }
 }

@@ -28,11 +28,7 @@ section, summary, time, mark, audio, video {
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;}
-#header.container {
-	margin: 0 auto;
-	padding-bottom: 50px;
-	font-family: 'BM-JUA', sans-serif;
-}
+
 body {
 	line-height: 1;
 }
@@ -71,7 +67,6 @@ input::-moz-focus-inner {
 
 input, select, textarea {
 	-moz-appearance: none;
-	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
 }
@@ -1298,7 +1293,6 @@ input, select, textarea {
 	form input[type="password"],
 	form select,
 	form textarea {
-		-webkit-appearance: none;
 		display: block;
 		width: 100%;
 		border-radius: 8px;
@@ -1444,7 +1438,6 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;
-		-webkit-appearance: none;
 		position: relative;
 		display: inline-block;
 		background-color: #4091bf;
@@ -1853,11 +1846,9 @@ input, select, textarea {
 /* Wrappers */
 
 	#header-wrapper {
-		background: url("images/bg01.png"), url("../images/rain.gif");
-		background-position: top ,center center;
+		background: url("images/bg01.png"), url("../../images/header.jpg");
+		background-position: top left, center center;
 		background-size: auto, cover;
-		width: 100%;
-		text-align: center;
 		padding: 3em 0;
 	}
 

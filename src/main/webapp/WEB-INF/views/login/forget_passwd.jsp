@@ -21,18 +21,18 @@
         <div class="image-holder">
             <img src="/images/weather-front.jpg" alt="">
         </div>
-        <form action="">
+        <form action="/forget_passwd" method="post">
             <h3>PassWord Find Form</h3>
             <div class="form-wrapper">
-                <input type="text" placeholder="Username" class="form-control">
+                <input type="text" placeholder="Username" class="form-control" required="required" name="user_name">
                 <i class="zmdi zmdi-account"></i>
             </div>
             <div class="form-wrapper">
-                <input type="text" placeholder="Email Address" class="form-control">
+                <input type="text" placeholder="Email Address" class="form-control"  required="required" name="user_email">
                 <i class="zmdi zmdi-email"></i>
 
             </div>
-            <button type="button" onclick="location.href='/login' ">find PassWord
+            <button type="submit" onclick="location.href='/login' ">find PassWord
                 <i class="zmdi zmdi-arrow-right">
                 </i>
             </button>
@@ -41,4 +41,6 @@
 </div>
 
 </body>
+console.log("user_name : " + user_name);
+console.log("user_email : " + user_email);
 </html>

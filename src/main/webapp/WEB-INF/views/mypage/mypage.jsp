@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/car.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" type="text/css">
     <style type="text/css">
         @font-face {
             src: url("/fonts/poppins/BMJUA_ttf.ttf");
@@ -61,9 +62,10 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="#">채팅내역</a></li>
+                                    <li><a href="/chat">채팅내역</a></li>
                                     <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
+                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">
@@ -104,29 +106,40 @@
                                 </article>
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
-                                    <div class="row">
+
                                         <h2><%=user_name%>님 의 내 정보 수정 페이지 입니다.</h2>
                                         <div class="col-4 col-12-medium">
                                             <section>
-                                                <form action="/forget_id" method="post">
+                                                <div class="row">
+                                                <form action="/UpdateMyPage" method="post">
 
                                                     <div class="form-wrapper">
-                                                        <input type="text" placeholder="Username" id="user_name" name="user_name" class="form-control">
+                                                        <input type="text" placeholder="이름" id="user_name" name="user_name" class="form-control">
                                                         <i class="zmdi zmdi-account"></i>
                                                     </div>
                                                     <div class="form-wrapper">
-                                                        <input type="text" placeholder="age" id="age" name="age" class="form-control">
+                                                        <input type="text" placeholder="나이" id="age" name="age" class="form-control">
                                                         <i class="zmdi zmdi-email"></i>
 
                                                     </div>
-                                                    <button type="submit" value="Find you ID" onclick="location.href="">find ID
+                                                    <div class="form-wrapper">
+                                                        <select name="sex" id="sex" class="form-control" >
+                                                            <option value="" disabled selected>Gender</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="femal">Female</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                        <i class="zmdi zmdi-email"></i>
+
+                                                    </div>
+                                                    <button type="submit" value="UpdateMyPage" onclick="location.href=/login">change info
                                                     <i class="zmdi zmdi-arrow-right">
                                                     </i>
                                                     </button>
                                                 </form>
+                                                </div>
                                             </section>
                                         </div>
-                                    </div>
                                 </section>
                             </div>
                         </div>

@@ -12,6 +12,7 @@
 
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
 </head>
 
 <body>
@@ -21,18 +22,18 @@
         <div class="image-holder">
             <img src="/images/weather-front.jpg" alt="">
         </div>
-        <form action="/forget_id">
+        <form action="/forget_id" method="post">
             <h3>Registration Form</h3>
             <div class="form-wrapper">
-                <input type="text" placeholder="Username" name="user_name" class="form-control">
+                <input type="text" placeholder="Username" id="user_name" name="user_name" class="form-control">
                 <i class="zmdi zmdi-account"></i>
             </div>
             <div class="form-wrapper">
-                <input type="text" placeholder="age" name="age" class="form-control">
+                <input type="text" placeholder="age" id="age" name="age" class="form-control">
                 <i class="zmdi zmdi-email"></i>
 
             </div>
-            <button type="submit" value="Find you ID" onclick="location.href='/login' ">find ID
+            <button type="submit" value="Find you ID" onclick="location.href=/login">find ID
                 <i class="zmdi zmdi-arrow-right">
                 </i>
             </button>
@@ -41,4 +42,8 @@
 </div>
 
 </body>
+<script>
+    console.log("user_name : " + user_name);
+    console.log("age : " + age);
+</script>
 </html>

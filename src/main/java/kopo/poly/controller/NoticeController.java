@@ -178,6 +178,7 @@ public class NoticeController {
         /*
          * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
          */
+        List<NoticeDTO> rList = noticeService.getNoticeList();
         NoticeDTO pDTO = new NoticeDTO();
 
         pDTO.setNotice_seq(nSeq);
@@ -201,6 +202,7 @@ public class NoticeController {
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("rDTO", rDTO);
         model.addAttribute("reg_id",rDTO.getReg_id());
+        model.addAttribute("rList", rList);
 
 
         // 변수 초기화(메모리 효율화 시키기 위해 사용함)

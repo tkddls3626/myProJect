@@ -1,9 +1,11 @@
 <%@ page import="java.util.List" %>
+<%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <%
     List<List<String>> rList = (List<List<String>>) request.getAttribute("rList");
+    String user_name = CmmUtil.nvl((String) session.getAttribute("SS_USER_NAME"));
 %>
 <html>
 
@@ -59,9 +61,10 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="#">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
-                                    <li><a href="#">내 정보 수정</a></li>
+                                    <li><a href="/chat">채팅내역</a></li>
+                                    <li><a href="/FriendList?receive_user=<%=user_name%>">친구목록</a></li>
+                                    <li><a href="/mypage">내 정보 수정</a></li>
+                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">

@@ -2,10 +2,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.NoticeDTO" %>
+<%@ page import="java.util.ArrayList" %>
 <%
 	String SS_USER_EMAIL = CmmUtil.nvl((String)session.getAttribute("SS_USER_EMAIL"));
+	String SS_USER_NAME = CmmUtil.nvl((String)session.getAttribute("SS_USER_NAME"));
+	String SS_USER_ID = CmmUtil.nvl((String)session.getAttribute("SS_USER_ID"));
+	String user_seq = CmmUtil.nvl((String)session.getAttribute("SS_USER_SEQ"));
 
-	String res = CmmUtil.nvl((String)request.getAttribute("res"));
+	List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
+
+	//게시판 조회 결과 보여주기
+	if (rList == null) {
+		rList = new ArrayList<NoticeDTO>();
+
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -52,6 +63,7 @@
 								<div class="form-group">
 									<label>Email & ID</label>
 									<input type="text" class="form-control p_input" id="user_email" name="user_email" style="background-color: #0a0a0a">
+								<%--TODO user_id도  id값을 받아서 email or id가 둘중 하나가 되었을때 로그인 --%>
 								</div>
 								<div class="form-group">
 									<label>Pass word</label>

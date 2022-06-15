@@ -1,5 +1,6 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.FriendDTO;
 import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -31,6 +34,7 @@ public class MyPageController {
 
         return "mypage/mypage";
     }
+
     //유저정보 변경
     @PostMapping(value = "/UpdateMyPage")
     public String UpdateMyPage(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
@@ -103,4 +107,115 @@ public class MyPageController {
 
         return "/alert";
     }
+    //마이페이지 화면 출력
+    @GetMapping(value = "mypageinfo")
+    public String mypageinfo(HttpSession session, ModelMap model,HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + ".mypageEdit start!");
+
+        String user_email = CmmUtil.nvl((String) session.getAttribute("SS_USER_EMAIL"));
+        String user_name = CmmUtil.nvl((String) session.getAttribute("SS_USER_NAME"));
+        //유저 정보를 가져오기위해 아이디 값을 담아 보냄
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+
+        pDTO.setUser_email(user_email);
+        pDTO.setUser_name(user_name);
+
+        log.info("user_email + " + user_email);
+
+        //값 담아올 DTO 생성
+        UserInfoDTO rDTO = userInfoService.getUserInfo(pDTO);
+        log.info("관심여행지는" + rDTO.getTlv_int());
+        if (rDTO == null) {
+            log.info("rDTO가 널임");
+            rDTO = new UserInfoDTO();
+
+        }
+
+        FriendDTO fDTO = new FriendDTO();
+        fDTO.setReceive_user(user_name);
+        model.addAttribute("rDTO", rDTO);
+
+        List<UserInfoDTO> uList = userInfoService.getFriendList(fDTO);
+        for(UserInfoDTO a : uList) {
+            log.info( this.getClass().getName()+"user_name : "+a.getUser_name());
+            log.info( this.getClass().getName()+"user_name : "+a.getValue());
+            log.info( this.getClass().getName()+"user_name : "+a.getUser_email());
+        }
+
+        model.addAttribute("uList", uList);
+        log.info(this.getClass().getName() + ".userPage end!");
+
+        return "/mypage/mypageinfo";
+    }
+    @GetMapping (value = "/FriendList")
+    public String FriendList(HttpServletRequest request, ModelMap model)throws Exception {
+        String receive_user = CmmUtil.nvl(request.getParameter("receive_user"));
+        FriendDTO fDTO = new FriendDTO();
+        fDTO.setReceive_user(receive_user);
+        List<UserInfoDTO> uList = userInfoService.getFriendList(fDTO);
+
+        for(UserInfoDTO a : uList) {
+            log.info( this.getClass().getName()+"user_name : "+a.getUser_name());
+            log.info( this.getClass().getName()+"user_name : "+a.getValue());
+        }
+
+        model.addAttribute("uList", uList);
+        return "/mypage/FriendList";
+    }
+    @GetMapping (value = "/evaluate")
+    public String evaluate(HttpServletRequest request, ModelMap model)throws Exception {
+        return "/elt/evaluate";
+    }
+
+    //마이페이지 화면 출력
+    @GetMapping(value = "/friendInfo")
+    public String friendInfo(ModelMap model,HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + ".mypageEdit start!");
+
+        String user_email = CmmUtil.nvl((String) request.getParameter("user_email"));
+        String user_name = CmmUtil.nvl((String) request.getParameter("user_name"));
+        //유저 정보를 가져오기위해 아이디 값을 담아 보냄
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+
+        pDTO.setUser_email(user_email);
+        pDTO.setUser_name(user_name);
+        log.info("user_email : " + user_email);
+        log.info("user_name + " + user_name);
+
+        //값 담아올 DTO 생성
+        UserInfoDTO rDTO = userInfoService.getUserInfo(pDTO);
+        if (rDTO == null) {
+            log.info("rDTO가 널임");
+            rDTO = new UserInfoDTO();
+
+        }
+
+
+        FriendDTO fDTO = new FriendDTO();
+        fDTO.setReceive_user(user_name);
+        model.addAttribute("rDTO", rDTO);
+
+        List<UserInfoDTO> uList = userInfoService.getFriendList(fDTO);
+        for(UserInfoDTO a : uList) {
+            log.info( this.getClass().getName()+"user_name : "+a.getUser_name());
+            log.info( this.getClass().getName()+"user_name : "+a.getValue());
+            log.info( this.getClass().getName()+"user_name : "+a.getUser_email());
+        }
+
+        model.addAttribute("uList", uList);
+        log.info(this.getClass().getName() + ".userPage end!");
+
+        return "/friend/friendInfo";
+    }
+    @GetMapping(value= "/frined/setScore")
+    @ResponseBody
+    public String setScore(HttpServletRequest request) throws Exception {
+        log.info("request ajax data : " + request.getParameter("data"));
+        return "/friend/friedInfo";
+    }
+
 }

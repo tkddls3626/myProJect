@@ -103,7 +103,12 @@
             <artifactId>jsoup</artifactId>
             <version>1.12.1</version>
         </dependency>
-
+        <!-- 웹 소켓 채팅사용하기위해 외부라이브러리 추가 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>2.6.2</version>
+        </dependency>
 
     </dependencies>
 

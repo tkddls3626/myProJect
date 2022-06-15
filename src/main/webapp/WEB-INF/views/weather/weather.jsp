@@ -1,28 +1,53 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 
 <%
     List<String> rList = (List<String>) request.getAttribute("rList");
-        %>
+
+    Date nowTime = new Date();
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+%>
 <!DOCTYPE HTML>
 
 <html>
+
 <head>
-    <title>Left Sidebar - ZeroFour by HTML5 UP</title>
+    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
-    <style>
-        table {
-        width: 100%;
-    }
+    <link rel="stylesheet" href="/css/car.css" />
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b596c8e6e2eb1dc9d160e1a1319a1587"></script>
+    <style type="text/css">
+        @font-face {
+            src: url("/fonts/poppins/BMJUA_ttf.ttf");
+            font-family: "jua";
+        }
+        p {
+            font-size: 15px;
+            font-family: "jua";
+        }
+        label{
+            font-family: "jua";
+        }
+        a{
+            font-family: "jua";
+        }
+        h2{
+            font-family: "jua";
+        }
+        h3{
+            font-family: "jua";
+        }
 
-    table, th, td {
-        border: 1px solid #bcbcbc;
-    }</style>
-</head>
-<body class="left-sidebar is-preload">
+    </style>
+
+  </head>
+
+<body class="right-sidebar is-preload">
 <div id="page-wrapper">
 
     <!-- Header Wrapper -->
@@ -43,9 +68,10 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="#">채팅내역</a></li>
+                                    <li><a href="/chat">채팅내역</a></li>
                                     <li><a href="#">카카오톡 알림 신청</a></li>
-                                    <li><a href="#">내 정보 수정</a></li>
+                                    <li><a href="/mypage">내 정보 수정</a></li>
+                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
                             </li>
                             <li class="current_page_item">
@@ -59,6 +85,7 @@
                             <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
                         </ul>
                     </nav>
+
                 </div>
             </header>
 
@@ -71,232 +98,55 @@
             <div class="inner">
                 <div class="container">
                     <div class="row">
-                        <div class="col-4 col-12-medium">
-                            <div id="sidebar">
-
-                                <!-- Sidebar -->
-
-                                <section>
-                                    <header class="major">
-                                        <h2>Subheading</h2>
-                                    </header>
-                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-                                        Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-                                        Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-                                        consequat etiam.</p>
-                                    <footer>
-                                        <a href="#" class="button icon solid fa-info-circle">Find out more</a>
-                                    </footer>
-                                </section>
-
-                                <section>
-                                    <header class="major">
-                                        <h2>Subheading</h2>
-                                    </header>
-                                    <ul class="style2">
-                                        <li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-                                        <li><a href="#">Ornare in hendrerit in lectus</a></li>
-                                        <li><a href="#">Semper mod quis eget mi dolore</a></li>
-                                        <li><a href="#">Quam turpis feugiat sit dolor</a></li>
-                                        <li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-                                        <li><a href="#">Semper mod quisturpis nisi</a></li>
-                                        <li><a href="#">Consequat etiam lorem phasellus</a></li>
-                                        <li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-                                        <li><a href="#">Semper mod quisturpis nisi</a></li>
-                                    </ul>
-                                    <footer>
-                                        <a href="#" class="button icon solid fa-arrow-circle-right">Do Something</a>
-                                    </footer>
-                                </section>
-
-                            </div>
-                        </div>
-                        <div class="col-8 col-12-medium imp-medium">
+                        <div class="col-12 col-12-medium">
                             <div id="content">
 
                                 <!-- Content -->
 
-                                <article>
-                                    <header class="major">
-                                        <h2>Left Sidebar</h2>
-                                        <p>Which means the sidebar is on the left</p>
-                                    </header>
+                                <article class="container box feature1">
 
-                                    <span class="image featured">
-                                        <table>
-                                          <caption>현재 날씨 정보</caption>
-                                          <thead>
-                                            <tr>
-                                              <th></th>
-                                              <th>기온</th>
-                                              <th>강수형태</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                            <tr>
-                                              <th>현재기온</th>
-                                              <td><%=rList.get(0)%>º</td>
-                                              <td>Dolor</td>
-                                            </tr>
-                                            <tr>
-                                              <th>강수량</th>
-                                              <td>Dolor</td>
-                                              <td> <%=rList.get(1)%></td>
-                                            </tr>
-                                            <tr>
-                                              <th>최저기온</th>
-                                              <td><%=rList.get(2)%>º</td>
-                                              <td>Dolor</td>
-                                            </tr>
-                                           <tr>
-                                              <th>최고기온</th>
-                                              <td><%=rList.get(3)%>º</td>
-                                              <td>Dolor</td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                    </span>
-
-                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-                                        Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-                                        Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-                                        consequat etiam lorem ipsum dolor sit amet nullam.</p>
-
-                                    <h3>More intriguing information</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-                                        justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-                                        ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-                                        vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-                                        Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-                                        rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-                                        Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-                                        Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-
-                                    <p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim
-                                        quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.
-                                        Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-                                        fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-                                        Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-                                        Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+                                    <div>
+                                        <header class="major">
+                                            <h2 style="margin: 0 0 0.5em 0;">현재날씨조회</h2>
+                                        </header>
+                                    </div>
                                 </article>
+                                <!-- Feature 1 -->
+                                <section class="container box feature1">
+                                    <form style="width:50%; height: 70%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; padding:10px;">
+                                    <div class="card">
+                                        <div class="card__info">
+                                            <div style="float:inside; width: 100%; height: 100%;">
+                                                <h2>현재 날씨</h2>
+                                            </div>
+                                            <p class="card__info__date">현재 날짜 : <%=nowTime%></p>
+                                        </div>
+                                        <div class="card__weather">
+                                            <svg width="34" class="card__weather__icon" height="24" viewBox="0 0 34 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                        d="M31.7764 13.3718C30.8073 12.1841 29.5779 11.4201 28.0897 11.0793C28.5632 10.3633 28.7992 9.57921 28.7992 8.72709C28.7992 7.52249 28.3664 6.49418 27.5014 5.64182C26.6361 4.78976 25.592 4.36354 24.3688 4.36354C23.2612 4.36354 22.3034 4.71584 21.496 5.42044C20.8155 3.80682 19.7334 2.50001 18.251 1.50001C16.7682 0.500241 15.1152 0 13.2921 0C10.8461 0 8.75757 0.852482 7.02679 2.55703C5.29589 4.26116 4.43071 6.31818 4.43071 8.72727C4.43071 8.89777 4.44229 9.1419 4.46532 9.46011C3.12694 10.0738 2.04801 11.0027 1.22884 12.2473C0.409735 13.4913 0 14.8637 0 16.3637C0 18.4659 0.758789 20.2642 2.27594 21.7583C3.79316 23.2528 5.61918 24 7.75375 24H26.5847C28.4191 24 29.9853 23.3603 31.2836 22.0823C32.5816 20.804 33.2308 19.2615 33.2308 17.4545C33.2306 15.9206 32.7457 14.5591 31.7764 13.3718Z"
+                                                        fill="#567DF4" />
+                                            </svg>
 
+                                            <p class="card__weather__temp">온도 : <%=rList.get(0)%></p>
+                                            <p class="card__weather__temp">습도 : <%=rList.get(4)%></p>
+                                            <p class="card__weather__temp">강수확률 : <%=rList.get(5)%></p>
+                                            <p class="card__weather__temp">풍속 : <%=rList.get(7)%></p>
+                                            <p class="card__weather__temp">일일 최저기온 : <%=rList.get(2)%></p>
+                                            <p class="card__weather__temp">일일 최고기온 : <%=rList.get(3)%></p>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </section>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    <!-- Footer Wrapper -->
-    <div id="footer-wrapper">
-        <footer id="footer" class="container">
-            <div class="row">
-                <div class="col-3 col-6-medium col-12-small">
-
-                    <!-- Links -->
-                    <section>
-                        <h2>Filler Links</h2>
-                        <ul class="divided">
-                            <li><a href="#">Quam turpis feugiat dolor</a></li>
-                            <li><a href="#">Amet ornare in hendrerit </a></li>
-                            <li><a href="#">Semper mod quisturpis nisi</a></li>
-                            <li><a href="#">Consequat etiam phasellus</a></li>
-                            <li><a href="#">Amet turpis, feugiat et</a></li>
-                            <li><a href="#">Ornare hendrerit lectus</a></li>
-                            <li><a href="#">Semper mod quis et dolore</a></li>
-                            <li><a href="#">Amet ornare in hendrerit</a></li>
-                            <li><a href="#">Consequat lorem phasellus</a></li>
-                            <li><a href="#">Amet turpis, feugiat amet</a></li>
-                            <li><a href="#">Semper mod quisturpis</a></li>
-                        </ul>
-                    </section>
-
-                </div>
-                <div class="col-3 col-6-medium col-12-small">
-
-                    <!-- Links -->
-                    <section>
-                        <h2>More Filler</h2>
-                        <ul class="divided">
-                            <li><a href="#">Quam turpis feugiat dolor</a></li>
-                            <li><a href="#">Amet ornare in in lectus</a></li>
-                            <li><a href="#">Semper mod sed tempus nisi</a></li>
-                            <li><a href="#">Consequat etiam phasellus</a></li>
-                        </ul>
-                    </section>
-
-                    <!-- Links -->
-                    <section>
-                        <h2>Even More Filler</h2>
-                        <ul class="divided">
-                            <li><a href="#">Quam turpis feugiat dolor</a></li>
-                            <li><a href="#">Amet ornare hendrerit lectus</a></li>
-                            <li><a href="#">Semper quisturpis nisi</a></li>
-                            <li><a href="#">Consequat lorem phasellus</a></li>
-                        </ul>
-                    </section>
-
-                </div>
-                <div class="col-6 col-12-medium imp-medium">
-
-                    <!-- About -->
-                    <section>
-                        <h2><strong>ZeroFour</strong> by HTML5 UP</h2>
-                        <p>Hi! This is <strong>ZeroFour</strong>, a free, fully responsive HTML5 site
-                            template by <a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a>.
-                            It's <a href="http://html5up.net/license/">Creative Commons Attribution</a>
-                            licensed so use it for any personal or commercial project (just credit us
-                            for the design!).</p>
-                        <a href="#" class="button alt icon solid fa-arrow-circle-right">Learn More</a>
-                    </section>
-
-                    <!-- Contact -->
-                    <section>
-                        <h2>Get in touch</h2>
-                        <div>
-                            <div class="row">
-                                <div class="col-6 col-12-small">
-                                    <dl class="contact">
-                                        <dt>Twitter</dt>
-                                        <dd><a href="#">@untitled-corp</a></dd>
-                                        <dt>Facebook</dt>
-                                        <dd><a href="#">facebook.com/untitled</a></dd>
-                                        <dt>WWW</dt>
-                                        <dd><a href="#">untitled.tld</a></dd>
-                                        <dt>Email</dt>
-                                        <dd><a href="#">user@untitled.tld</a></dd>
-                                    </dl>
-                                </div>
-                                <div class="col-6 col-12-small">
-                                    <dl class="contact">
-                                        <dt>Address</dt>
-                                        <dd>
-                                            1234 Fictional Rd<br />
-                                            Nashville, TN 00000-0000<br />
-                                            USA
-                                        </dd>
-                                        <dt>Phone</dt>
-                                        <dd>(000) 000-0000</dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
-                <div class="col-12">
-                    <div id="copyright">
-                        <ul class="menu">
-                            <li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
-
 </div>
-
 <!-- Scripts -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dropotron.min.js"></script>
@@ -306,4 +156,5 @@
 <script src="/js/main.js"></script>
 
 </body>
+
 </html>

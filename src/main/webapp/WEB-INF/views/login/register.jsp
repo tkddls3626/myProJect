@@ -36,9 +36,25 @@
                 <i class="zmdi zmdi-email"></i>
             </div>
             <div class="form-wrapper">
-                <select name="sex" id="" class="form-control" >
-                    <option value="" disabled selected>Gender</option>
-                    <option value="male">Male</option>
+                <select name="tlv_int" id="tlv_int" class="form-control" >
+                    <option value="" disabled selected>관심지역설정</option>
+                    <option value="seoul">서울시</option>
+                    <option value="gangwondo">강원도</option>
+                    <option value="gyeonggido">경기도</option>
+                    <option value="chungcheongbugdo">충청북도</option>
+                    <option value="chungcheongnamdo">충청남도</option>
+                    <option value="jeonlabugdo">전라북도</option>
+                    <option value="jeonlanamdo">전라남도</option>
+                    <option value="gyeongsangbugdo">경상북도</option>
+                    <option value="gyeongsangnamdo">경상남도</option>
+                    <option value="jejudo">제주도</option>
+                </select>
+                <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+            </div>
+            <div class="form-wrapper">
+                <select name="sex" id="sex" class="form-control" >
+                    <option value="" disabled selected>gender</option>
+                    <option value="male">male</option>
                     <option value="femal">Female</option>
                     <option value="other">Other</option>
                 </select>
@@ -81,8 +97,9 @@
         let password2 = document.getElementsByName("password2")[0].value;
         let age = document.getElementsByName("age")[0].value;
         let sex = document.getElementsByName("sex")[0].value;
+        let tlv_int = document.getElementsByName("tlv_int")[0].value;
 
-        let param = {"user_name" : user_name, "user_email" : user_email,"password" : password,"age" : age,"sex" : sex,};
+        let param = {"user_name" : user_name, "user_email" : user_email,"password" : password,"age" : age,"sex" : sex, "tlv_int" : tlv_int};
         /*유효성 검사*/
         if (user_name===""){
             alert("이름을 입력하세요");
@@ -124,7 +141,7 @@
                         text : "확인 버튼을 눌러주세요.",
                         icon : "success"
                     }).then(function() {
-                       location.href = "/index";
+                       location.href = "/login";
                     });
                 } else {
                     swal({

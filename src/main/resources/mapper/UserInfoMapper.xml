@@ -12,14 +12,18 @@
 			 	USER_NAME,
 			 	PASSWORD,
 			 	AGE,
-			 	SEX
+			 	SEX,
+			 	USER_ID,
+			 	TLV_INT
 			)
 			VALUES(
 				   #{user_email},
 				   #{user_name},
 				   #{password},
 				   #{age},
-				   #{sex}
+				   #{sex},
+				   #{user_id},
+			       #{tlv_int}
 				  )
 	</insert>
 
@@ -32,15 +36,84 @@
 
 	<!---회원가입 로그인하기  -->
 	<select  id="getUserLoginCheck"  parameterType="UserInfoDTO" resultType="UserInfoDTO">
-		SELECT USER_EMAIL
+		SELECT USER_SEQ,USER_EMAIL,USER_NAME, USER_ID
 			FROM USER_INFO WHERE USER_EMAIL = #{user_email} AND PASSWORD = #{password}
 			</select>
 	<!--사용자 아이디찾기-->
 	<select id="findUserId" parameterType="UserInfoDTO"
 			resultType="UserInfoDTO">
-		SELECT USER_NAME
+		SELECT USER_NAME,USER_EMAIL
 		FROM USER_INFO
-		WHERE EMAIL=#{email} AND USER_NAME= #{user_name}
+		WHERE USER_NAME= #{user_name} AND AGE= #{age}
 	</select>
 
+	<!--사용자 비밀번호변경-->
+	<update id="updateUserPw" parameterType="UserInfoDTO">
+		UPDATE USER_INFO
+		SET PASSWORD = #{password}
+		WHERE USER_NAME = #{user_name} AND USER_EMAIL = #{user_email}
+	</update>
+
+	<!-- 유저 정보 변경  -->
+	<update id="UpdateUserPage" parameterType="UserInfoDTO">
+	UPDATE USER_INFO
+	SET USER_NAME = #{user_name},
+		USER_EMAIL = #{user_email},
+		AGE = #{age},
+		SEX = #{sex}
+	WHERE USER_EMAIL = #{user_email}
+	</update>
+
+	<!--사용자 마이페이지 정보가져오기 -->
+	<select  id="getUserInfo"  parameterType="UserInfoDTO" resultType="UserInfoDTO">
+	SELECT USER_NAME, PASSWORD, USER_EMAIL, AGE, SEX, TLV_INT
+	FROM USER_INFO
+	WHERE USER_EMAIL = #{user_email}
+	</select>
+
+	<!-- 회원탈퇴  -->
+	<delete parameterType="UserInfoDTO" id="deleteUserInfo">
+	DELETE FROM USER_INFO
+	WHERE USER_EMAIL = #{user_email} </delete>
+
+	<insert id="addFriend" parameterType="FriendDTO">
+		INSERT INTO FRIEND
+		(
+			USER_SEQ,
+		 	RECEIVE_USER,
+		 	VALUE
+
+		)
+		VALUES (
+		    #{user_seq},
+		    #{receive_user},
+		    "0"
+		)
+	</insert>
+	<select id="getFriendList" parameterType="FriendDTO" resultType="UserInfoDTO">
+		SELECT
+			A.user_seq,
+			A.user_name,
+			B.value,
+			A.user_email
+		FROM yuDB.USER_INFO A
+				 INNER JOIN yuDB.FRIEND B
+							ON A.user_seq = B.user_seq and B.RECEIVE_USER = #{receive_user}
+	</select>
+
+	<update id="friendCheck" parameterType="FriendDTO">
+		UPDATE FRIEND
+		SET VALUE = 1
+		WHERE USER_SEQ = #{user_seq} AND RECEIVE_USER = #{receive_user}
+	</update>
+
+	<select id="getFriendList2" parameterType="FriendDTO" resultType="UserInfoDTO">
+		SELECT
+			A.user_seq,
+			A.user_name,
+			B.value
+		FROM yuDB.USER_INFO A
+				 INNER JOIN yuDB.FRIEND B
+							ON A.user_seq = B.user_seq and B.RECEIVE_USER = #{receive_user} and B.VALUE = 1
+	</select>
 </mapper>
