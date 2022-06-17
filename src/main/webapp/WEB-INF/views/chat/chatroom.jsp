@@ -53,7 +53,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: #E9E5D6;
+        background-image: url("/images/chat.jpg");
         font-family: Helvetica, sans-serif;
     }
 
@@ -216,26 +216,29 @@
             <div class="col-md-6" style="margin-top: 20px;">
                 <nav aria-label="Breadcrumb">
                     <ul class="breadcrumb justify-content-center py-0 bg-transparent">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">About</li>
+                       <button type="button" class="btn btn-success"></button>
+                        <li class="breadcrumb-item active"></li>
                     </ul>
                 </nav>
-                <h1 class="text-center" style="margin-bottom: 10%;">채팅</h1>
+                <h1 class="text-center" style="margin-bottom: 10%;"></h1>
 
             </div>
         </div>
 
     </div>
 </header>
+<!--
+Inspired by https://dribbble.com/supahfunk
+-->
+    <!--<div class="bg"></div>-->
 
-
-<div class="container" style="height:800px">
+<div class="container" style="height:65%; width:50%; margin-right: auto; margin-left: auto;" >
     <section class="msger" style="margin: 0 auto;">
         <header class="msger-header">
             <div class="msger-header-title">
                 <div class="msg-img"
                      style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>
-                <h2><%=rDTO.getUser_other()%>님과 대화</h2><a href="javascript:void(0);" onclick="back()">대화방나가기</a>
+                <h2><%=rDTO.getUser_other()%>님과 대화</h2><a href="/notice/NoticeList2">대화방나가기</a>
 
             </div>
             <div class="msger-header-options">

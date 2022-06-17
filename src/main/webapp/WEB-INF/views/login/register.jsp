@@ -61,6 +61,14 @@
                 <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
             </div>
             <div class="form-wrapper">
+                <select name="car_yn" id="car_yn" class="form-control" >
+                    <option value="" disabled selected>차량유무</option>
+                    <option value="GET CAR">차량소지함</option>
+                    <option value="NO CAR">차량없음</option>
+                </select>
+                <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+            </div>
+            <div class="form-wrapper">
                 <input type="password" placeholder="Password" class="form-control" name="password1" id="pw">
                 <i class="zmdi zmdi-lock"></i>
             </div>
@@ -98,8 +106,9 @@
         let age = document.getElementsByName("age")[0].value;
         let sex = document.getElementsByName("sex")[0].value;
         let tlv_int = document.getElementsByName("tlv_int")[0].value;
+        let car_yn = document.getElementsByName("car_yn")[0].value;
 
-        let param = {"user_name" : user_name, "user_email" : user_email,"password" : password,"age" : age,"sex" : sex, "tlv_int" : tlv_int};
+        let param = {"user_name" : user_name, "user_email" : user_email,"password" : password,"age" : age,"sex" : sex, "tlv_int" : tlv_int, "car_yn" : car_yn};
         /*유효성 검사*/
         if (user_name===""){
             alert("이름을 입력하세요");
@@ -124,6 +133,16 @@
         if (sex===""){
             alert("성별을 기입하지 않으셨습니다.");
             document.getElementsByName("sex")[0].focus();
+            return false;
+        }
+        if (tlv_int===""){
+            alert("관심지역을 기입하지 않으셨습니다.");
+            document.getElementsByName("tlv_int")[0].focus();
+            return false;
+        }
+        if (car_yn===""){
+            alert("관심지역을 기입하지 않으셨습니다.");
+            document.getElementsByName("car_yn")[0].focus();
             return false;
         }
 

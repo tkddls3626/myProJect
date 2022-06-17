@@ -74,8 +74,6 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>

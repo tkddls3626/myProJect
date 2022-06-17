@@ -61,8 +61,6 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="/FriendList?receive_user=<%=user_name%>">친구목록</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -76,6 +74,7 @@
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
                             <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <button type="submit" class="btn btn-outline-secondary"><a href="/logout">로그아웃</a></button>
                         </ul>
                     </nav>
 
@@ -103,6 +102,7 @@
                                 <h2>추천 야영지</h2>
                                 <p>아래 이미지를 <strong>선택하여</strong> 홈페이지에 들어가보세요!</p>
                             </header>
+
                         </div>
                         <div class="col-4 col-12-medium">
                             <section>

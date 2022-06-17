@@ -9,7 +9,8 @@
 
     String admin = CmmUtil.nvl((String)session.getAttribute("SS_USER_TYPE"));
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
-
+    String nSeq = "";
+    String change = "";
 
     //게시판 조회 결과 보여주기
     if (rList == null) {
@@ -157,8 +158,6 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -167,7 +166,7 @@
                                 <a>날씨조회</a>
                                 <ul>
                                     <li><a href="/weather">현재날씨조회</a></li>
-                                    <li><a href="weather2">미래날씨조회</a></li>
+                                    <li><a href="/weather2">미래날씨조회</a></li>
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
@@ -217,22 +216,31 @@
                                                             <div class="divTableHead" style="width: 10%;">좋아요</div>
                                                         </div>
                                                     </div>
+
                                                     <%
                                                         for (int i = 0; i < rList.size(); i++) {
                                                             NoticeDTO rDTO = rList.get(i);
 
-                                                            if (rDTO == null) {
-                                                                rDTO = new NoticeDTO();
-                                                            }
+                                                            nSeq = rDTO.getNotice_seq();
 
-                                                            String nSeq = rDTO.getNotice_seq();
+                                                            if (rDTO.getReg_id().equals("admin")) {
+
+                                                                change = "공지";
+
+                                                            }else {
+
+                                                                nSeq = rDTO.getNotice_seq();
+                                                                change = nSeq;
+                                                            }
                                                     %>
                                                     <div class="divTableBody">
 
                                                         <div class="divTableRow" >
                                                             <div class="divTableCell">
-                                                                <a href="/notice/NoticeInfo2?nSeq=<%=nSeq%>"><%=nSeq%>
+                                                                <div>
+                                                                <a style="color: #ff00aa"><%=change%>
                                                                 </a>
+                                                                </div>
                                                             </div>
                                                             <div class="divTableCell">
                                                                 <a href="/notice/NoticeInfo2?nSeq=<%=nSeq%>">

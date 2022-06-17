@@ -21,8 +21,8 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
     <title>Right Sidebar - ZeroFour by HTML5 UP</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/car.css" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/car.css" type="text/css" />
     <link rel="canonical" href="http://stocad.kr/bbs/register_form.php">
     <link rel="stylesheet" href="http://stocad.kr/nariya/app/bs4/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="http://stocad.kr/nariya/css/nariya.css" type="text/css">
@@ -79,8 +79,6 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -119,6 +117,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                         <header class="major">
                                             <h2 style="margin: 0 0 0.5em 0;"><%=rDTO.getUser_name()%>님 의 내 정보 페이지 입니다.</h2>
                                         </header>
+
                                     </div>
                                 </article>
                                 <!-- Feature 1 -->
@@ -159,20 +158,38 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                             <input type="text" name="mb_email" value="<%=rDTO.getAge()%>" id="reg_mb_email" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
                                                     </div>
-
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_name">성별<strong class="sr-only">필수</strong></label>
+                                                        <label class="col-sm-2" for="reg_mb_email">차량<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" id="sex" name="mb_name" value="<%=rDTO.getSex()%>" readonly="" class="form-control ">
+                                                            <input type="hidden" name="old_email" value="<%=rDTO.getCar_yn()%>">
+                                                            <input type="text" name="mb_email" value="<%=rDTO.getCar_yn()%>" id="car" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
                                                     </div>
-
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2" for="reg_mb_nick">E-MAIL<strong class="sr-only">필수</strong></label>
+                                                        <div class="col-sm-4">
+                                                            <input type="hidden" name="mb_nick_default" value="<%=rDTO.getSex()%>">
+                                                            <input type="text" name="mb_nick" value="<%=rDTO.getSex()%>" id="reg_mb_sex" required="" class="form-control nospace required" maxlength="20">
+                                                        </div>
+                                                    </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="form-control-plaintext f-de text-muted pb-0">
+                                                                매너지수 : <%=Math.round((Double.parseDouble(rDTO.getManner_index()))*100)/100.0%>
+                                                            <ul class="display-container">
+                                                                <li class="note-display">
+                                                                    <figure class="CircleStrokeMeter" data-score="7.5">
+                                                                    </figure>
+                                                                </li>
+                                                            </ul>
+                                                            </p>
+                                                        </div>
                                                 </li>
-
+                                                <ul class="list-group">
                                                 <li class="list-group-item pt-5">
-                                                    <h5>친구승인 목록</h5>
+                                                    <h5 >친구승인 목록</h5>
                                                     <hr>
                                                 </li>
+                                                </ul>
                                             </ul>
 
                                                 <ul class="list-group" style="text-align: left;">
@@ -201,7 +218,11 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                     if(uList.get(i).getValue().equals("1")) {
                                                 %>
                                                 <li class="list-group-item">이름: <%=uList.get(i).getUser_name()%>
-                                                    <a onclick="location.href='/friendInfo?user_email=<%=uList.get(i).getUser_email()%>&user_email=<%=uList.get(i).getUser_name()%>'" class="btn btn-primary nofocus" role="button" style="width:15%; float: right;">
+                                                    <a onclick="friendDelete('<%=uList.get(i).getUser_seq()%>', '<%=rDTO.getUser_name()%>')" class="btn btn-danger nofocus" role="button" style="margin-left: 15px;width:15%; float: right;">
+                                                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                                                        친구삭제
+                                                    </a>
+                                                    <a onclick="location.href='/friendInfo?user_email=<%=uList.get(i).getUser_email()%>&user_name=<%=uList.get(i).getUser_name()%>'" class="btn btn-primary nofocus" role="button" style="width:15%; float: right;">
                                                         <i class="fa fa-user-plus" aria-hidden="true"></i>
                                                         상세보기
                                                     </a>
@@ -215,36 +236,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                 %>
                                             </ul>
                                         </form>
-<%--                                        <section>--%>
-<%--                                                <form style="width:100%; height: 100%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; padding:10px;" action="/deleteUser">--%>
-<%--                                                    <div style="float:inside; width: 100%; height: 100%;">--%>
-<%--                                                        <br>--%>
-<%--                                                        <h2>이메일</h2>--%>
-<%--                                                        <div style="width:70%;height: 70%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; font-size: 20px;">--%>
-<%--                                                            <div>--%>
-<%--                                                            <%=rDTO.getUser_email()%>--%>
-<%--                                                            </div>--%>
-<%--                                                        </div>--%>
-<%--                                                        <hr>--%>
-<%--                                                        <h2>이름</h2>--%>
-<%--                                                        <div style="width:70%;height: 100%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; font-size: 20px;">--%>
-<%--                                                        <%=rDTO.getUser_name()%>--%>
-<%--                                                        </div>--%>
-<%--                                                        <hr>--%>
-<%--                                                        <h2>나이</h2>--%>
-<%--                                                        <div style="width:20%;height: 100%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; font-size: 20px;">--%>
-<%--                                                        <%=rDTO.getAge()%>--%>
-<%--                                                        </div>--%>
-<%--                                                        <hr>--%>
-<%--                                                        <h2>성별</h2>--%>
-<%--                                                        <div style="width:20%;height: 100%; border: 1px solid black;border-radius: 10px; margin-left: auto; margin-right: auto; font-size: 20px;">--%>
-<%--                                                            <%=rDTO.getSex()%>--%>
-<%--                                                        </div>--%>
-<%--                                                        <hr>--%>
-<%--                                                    </div>--%>
-<%--                                                    <button type="submit">회원탈퇴</button>--%>
-<%--                                                </form>--%>
-<%--                                        </section>--%>
+                                        <button class="btn btn-primary nofocus" style="float: right" onclick="location.href='/deleteUser'">회원탈퇴</button>
                                     </div>
                                 </section>
                             </div>
@@ -255,6 +247,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
         </div>
     </div>
 </div>
+</body>
 <!-- Scripts -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.dropotron.min.js"></script>
@@ -264,6 +257,14 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
 <script src="/js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function doSwal(title, content, type = "info") {
+        swal(title, content, type, {
+            timer : 4000,
+            button : "확인"
+        });
+    }
+</script>
 <script>
     function friendCheck(user_seq) {
         console.log("user_seq : " + user_seq);
@@ -279,23 +280,67 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
             contentType: "application/json; charset=utf-8", // json 인코딩
             dataType: "text", //json타입
             success(result) {
-                console.log(result);
+                if(result === "success"){
                 swal({
                     title : "친구 추가 완료",
                     text : "확인 버튼을 눌러주세요.",
                     icon : "success"
                 }).then(function() {
-                    window.location.href = 'http://localhost:10000/mypageinfo';
+                    location.href = "/mypageinfo";
                 });
+            } else {
+                    swal({
+                        title : "친구 추가 실패",
+                        text : "확인 버튼을 눌러주세요.",
+                        icon : "error"
+                         });
+                        }
+                    },
+            error: (log) => {
+                alert("실패" + log)
+            }
+
+        });
+    }
+</script>
+<%--친구 삭제 script--%>
+<script>
+    function friendDelete(user_seq, user_name) {
+        console.log("user_seq : " + user_seq);
+        console.log("user_name : " + user_name);
+        /*user_seq가지고 UserInfo 테이블의 user_name 가져오기*/
+        $.ajax({
+            type: "GET", // get방식
+            url: "/user/friendDelete", // 파이썬으로 통신
+            data: {
+                "user_seq" : user_seq,
+                "user_name" : user_name
+            }, // area 데이터 값
+            contentType: "application/json; charset=utf-8", // json 인코딩
+            dataType: "text", //json타입
+            success(result) {
+                if(result === "success"){
+                    swal({
+                        title : "친구 삭제 완료",
+                        text : "확인 버튼을 눌러주세요.",
+                        icon : "success"
+                    }).then(function() {
+                        location.href = "/mypageinfo";
+                    });
+                } else {
+                    swal({
+                        title : "친구 추가 실패",
+                        text : "확인 버튼을 눌러주세요.",
+                        icon : "error"
+                    });
+                }
             },
             error: (log) => {
                 alert("실패" + log)
             }
 
-        })
+        });
     }
 
 </script>
-</body>
-
 </html>

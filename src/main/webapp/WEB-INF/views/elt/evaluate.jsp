@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -231,7 +232,7 @@
 
     <!-- Button -->
     <div class="button-box">
-        <button class="button trigger">Submit!</button>
+        <button class="button" onclick="trigerFun()">Submit!</button>
     </div>
 
 </div>
@@ -258,6 +259,10 @@ but I would appreciate an attribution from my work. I hope you enjoy it.
 */
     //Global:
     var survey = []; //Bidimensional array: [ [1,3], [2,4] ]
+    let user_email = document.getElementById("reg_mb_nick").value;
+    let user_name = document.getElementById("reg_mb_name").value;
+    console.log(user_email);
+    console.log(user_name)
 
     //Switcher function:
     $(".rb-tab").click(function(){
@@ -267,7 +272,7 @@ but I would appreciate an attribution from my work. I hope you enjoy it.
     });
 
     //Save data:
-    $(".trigger").click(function(){
+    function trigerFun() {
         //Empty array:
         survey = [];
         let totalNum = 0;
@@ -287,19 +292,26 @@ but I would appreciate an attribution from my work. I hope you enjoy it.
             type: "GET", // get방식
             url: "/frined/setScore", // 파이썬으로 통신
             data: {
-                "data": totalNum
+                "data": totalNum,
+                "user_email" : user_email
             }, // area 데이터 값
             contentType: "application/json; charset=utf-8", // json 인코딩
             dataType: "text", //json타입
             success(result) {
-                console.log("result : " + result)
+                if(result === "success"){
+                    alert("평가가 완료되었습니다.")
+                window.location.href = 'friendInfo?user_email=' + user_email + '&user_name=' + user_name;
+                }
             },
             error: (log) => {
                 alert("실패" + log)
             }
 
-        })
-    });
+        });
+
+    }
+
+
 </script>
 </body>
 </html>

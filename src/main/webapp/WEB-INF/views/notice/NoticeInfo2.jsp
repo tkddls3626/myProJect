@@ -155,8 +155,6 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -165,7 +163,7 @@
                                 <a>날씨조회</a>
                                 <ul>
                                     <li><a href="/weather">현재날씨조회</a></li>
-                                    <li><a href="weather2">미래날씨조회</a></li>
+                                    <li><a href="/weather2">미래날씨조회</a></li>
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
@@ -309,7 +307,7 @@
                                                             </div>
                                                             <div class="d-none d-md-block px-0 f-sm text-nowrap font-weight-normal">
                                                                 <span class="sr-only">작성일</span>
-                                                                2021.07.22 14:12					</div>
+                                                                <%=rDTO.getReg_dt()%>			</div>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -334,6 +332,7 @@
 <script src="/js/breakpoints.min.js"></script>
 <script src="/js/util.js"></script>
 <script src="/js/main.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
 <script>
     function addFriend(user_seq){
@@ -348,6 +347,21 @@
             dataType: "text", //json타입
             success(result) {
                 console.log("result")
+                if(result === "success"){
+                    swal({
+                        title : "친구 추가 완료",
+                        text : "친구 승인후 상대방이 친구추가를 할때까지 기다려주세요.",
+                        icon : "success"
+                    }).then(function() {
+                        location.href = "/mypageinfo";
+                    });
+                } else {
+                    swal({
+                        title : "친구 추가 실패",
+                        text : "확인 버튼을 눌러주세요.",
+                        icon : "error"
+                    });
+                }
             },
             error: (log) => {
                 alert("실패" + log)

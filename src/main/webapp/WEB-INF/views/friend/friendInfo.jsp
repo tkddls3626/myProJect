@@ -79,8 +79,6 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -124,7 +122,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
                                     <div class="register m-auto f-de">
-                                        <form id="fregisterform">
+                                        <form id="fregisterform2">
                                             <ul class="list-group mb-4">
                                                 <li class="list-group-item pt-5">
                                                     <h5>개인정보 확인</h5>
@@ -132,10 +130,10 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                 </li>
                                                 <li class="list-group-item pt-3 pt-sm-4">
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_nick">E-MAIL<strong class="sr-only">필수</strong></label>
+                                                        <label class="col-sm-2">E-MAIL<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="hidden" name="mb_nick_default" value="<%=rDTO.getUser_email()%>">
-                                                            <input type="text" name="mb_nick" value="<%=rDTO.getUser_email()%>" id="reg_mb_nick" required="" class="form-control nospace required" maxlength="20">
+                                                            <input type="hidden" value="<%=rDTO.getUser_email()%>">
+                                                            <input type="text" value="<%=rDTO.getUser_email()%>" id="reg_mb_nick" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
                                                         <div class="col-sm-6">
 
@@ -147,39 +145,58 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                     </div>
 
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_name">이름<strong class="sr-only">필수</strong></label>
+                                                        <label class="col-sm-2" >이름<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" id="reg_mb_name" name="mb_name" value="<%=rDTO.getUser_name()%>" readonly="" class="form-control ">
+                                                            <input type="text" id="reg_mb_name" value="<%=rDTO.getUser_name()%>" readonly="" class="form-control ">
                                                         </div>
                                                     </div>
 
 
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_email">age<strong class="sr-only">필수</strong></label>
+                                                        <label class="col-sm-2">age<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="hidden" name="old_email" value="<%=rDTO.getAge()%>">
-                                                            <input type="text" name="mb_email" value="<%=rDTO.getAge()%>" id="reg_mb_email" required="" class="form-control nospace required" maxlength="20">
+                                                            <input type="hidden"  value="<%=rDTO.getAge()%>">
+                                                            <input type="text"  value="<%=rDTO.getAge()%>" id="reg_mb_email" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_name">성별<strong class="sr-only">필수</strong></label>
+                                                        <label class="col-sm-2" >성별<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" id="sex" name="mb_name" value="<%=rDTO.getSex()%>" readonly="" class="form-control ">
+                                                            <input type="text" id="sex" value="<%=rDTO.getSex()%>" readonly="" class="form-control ">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2" >차량<strong class="sr-only">필수</strong></label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" id="car" value="<%=rDTO.getCar_yn()%>" readonly="" class="form-control ">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2" for="reg_mb_name">관심카테고리리<strong class="sr-only">필수</strong></label>
-                                                       <div class="col-sm-4">
-                                                            <input type="text" id="tlv" name="mb_name" value="<%=rDTO.getTlv_int()%>" readonly="" class="form-control ">
+                                                        <label class="col-sm-2" for="reg_mb_nick">E-관심카테고리리<strong class="sr-only">필수</strong></label>
+                                                        <div class="col-sm-4">
+                                                            <input type="hidden" name="mb_nick_default" value="<%=rDTO.getTlv_int()%>">
+                                                            <input type="text" name="mb_nick" value="<%=rDTO.getTlv_int()%>" id="reg_mb_sex" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
+                                                        <div class="col-sm-6">
+                                                            <p class="form-control-plaintext f-de text-muted pb-0">
+                                                                매너지수 : <%=Math.round((Double.parseDouble(rDTO.getManner_index()))*100)/100.0%>
+                                                            <ul class="display-container">
+                                                                <li class="note-display">
+                                                                    <figure class="CircleStrokeMeter" data-score="7.5">
+                                                                    </figure>
+                                                                </li>
+                                                            </ul>
+                                                            </p>
+                                                        </div>
+
                                                     </div>
 
                                                 </li>
 
                                             </ul>
-
+                                        </form>
                                     </div>
                                 </section>
                             </div>
@@ -201,38 +218,38 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<script>
-    function friendCheck(user_seq) {
-        console.log("user_seq : " + user_seq);
-        console.log("receive_user : " + "<%=rDTO.getUser_name()%>");
-        /*user_seq가지고 UserInfo 테이블의 user_name 가져오기*/
-        $.ajax({
-            type: "GET", // get방식
-            url: "/user/friendCheck", // 파이썬으로 통신
-            data: {
-                "user_seq" : user_seq,
-                "receive_user" : '<%=rDTO.getUser_name()%>'
-            }, // area 데이터 값
-            contentType: "application/json; charset=utf-8", // json 인코딩
-            dataType: "text", //json타입
-            success(result) {
-                console.log(result);
-                swal({
-                    title : "친구 추가 완료",
-                    text : "확인 버튼을 눌러주세요.",
-                    icon : "success"
-                }).then(function() {
-                    window.location.href = 'http://localhost:10000/mypageinfo';
-                });
-            },
-            error: (log) => {
-                alert("실패" + log)
-            }
+<%--<script>--%>
+<%--    function friendCheck(user_seq) {--%>
+<%--        console.log("user_seq : " + user_seq);--%>
+<%--        console.log("receive_user : " + "<%=rDTO.getUser_name()%>");--%>
+<%--        /*user_seq가지고 UserInfo 테이블의 user_name 가져오기*/--%>
+<%--        $.ajax({--%>
+<%--            type: "GET", // get방식--%>
+<%--            url: "/user/friendCheck", // 파이썬으로 통신--%>
+<%--            data: {--%>
+<%--                "user_seq" : user_seq,--%>
+<%--                "receive_user" : '<%=rDTO.getUser_name()%>'--%>
+<%--            }, // area 데이터 값--%>
+<%--            contentType: "application/json; charset=utf-8", // json 인코딩--%>
+<%--            dataType: "text", //json타입--%>
+<%--            success(result) {--%>
+<%--                console.log(result);--%>
+<%--                swal({--%>
+<%--                    title : "친구 추가 완료",--%>
+<%--                    text : "확인 버튼을 눌러주세요.",--%>
+<%--                    icon : "success"--%>
+<%--                }).then(function() {--%>
+<%--                    window.location.href = '/mypageinfo';--%>
+<%--                });--%>
+<%--            },--%>
+<%--            error: (log) => {--%>
+<%--                alert("실패" + log)--%>
+<%--            }--%>
 
-        })
-    }
+<%--        })--%>
+<%--    }--%>
 
-</script>
+<%--</script>--%>
 <%--model 창--%>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

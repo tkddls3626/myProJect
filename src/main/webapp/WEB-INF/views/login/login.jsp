@@ -154,7 +154,7 @@
 						text : "확인 버튼을 눌러주세요.",
 						icon : "success"
 					}).then(function() {
-						window.location.href = 'http://localhost:10000/index';
+						window.location.href = '/index';
 					});
 				} else {
 					swal({

@@ -62,8 +62,6 @@
                             <li>
                                 <a href="/mypage">마이페이지</a>
                                 <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
                                     <li><a href="/mypage">내 정보 수정</a></li>
                                     <li><a href="/mypageinfo">내 정보 확인</a></li>
                                 </ul>
@@ -110,13 +108,8 @@
                                         <h2><%=user_name%>님 의 내 정보 수정 페이지 입니다.</h2>
                                         <div class="col-4 col-12-medium">
                                             <section>
-                                                <div class="row">
                                                 <form action="/UpdateMyPage" method="post">
 
-                                                    <div class="form-wrapper">
-                                                        <input type="text" placeholder="이름" id="user_name" name="user_name" class="form-control">
-                                                        <i class="zmdi zmdi-account"></i>
-                                                    </div>
                                                     <div class="form-wrapper">
                                                         <input type="text" placeholder="나이" id="age" name="age" class="form-control">
                                                         <i class="zmdi zmdi-email"></i>
@@ -132,12 +125,41 @@
                                                         <i class="zmdi zmdi-email"></i>
 
                                                     </div>
-                                                    <button type="submit" value="UpdateMyPage" onclick="location.href=/login">change info
+                                                    <div class="form-wrapper">
+                                                        <select name="tlv_int" id="tlv_int" class="form-control" >
+                                                            <option value="" disabled selected>관심지역설정</option>
+                                                            <option value="seoul">서울시</option>
+                                                            <option value="gangwondo">강원도</option>
+                                                            <option value="gyeonggido">경기도</option>
+                                                            <option value="chungcheongbugdo">충청북도</option>
+                                                            <option value="chungcheongnamdo">충청남도</option>
+                                                            <option value="jeonlabugdo">전라북도</option>
+                                                            <option value="jeonlanamdo">전라남도</option>
+                                                            <option value="gyeongsangbugdo">경상북도</option>
+                                                            <option value="gyeongsangnamdo">경상남도</option>
+                                                            <option value="jejudo">제주도</option>
+                                                        </select>
+                                                        <i class="zmdi zmdi-email"></i>
+
+                                                    </div>
+                                                    <div class="form-wrapper">
+                                                        <select name="car_yn" id="car_yn" class="form-control" >
+                                                            <option value="" disabled selected>차량유무</option>
+                                                            <option value="GET CAR">차량소지함</option>
+                                                            <option value="NO CAR">차량없음</option>
+                                                        </select>
+                                                        <i class="zmdi zmdi-email"></i>
+
+                                                    </div>
+                                                    <button type="submit" value="UpdateMyPage" onclick="location.href=/login">정보 수정
                                                     <i class="zmdi zmdi-arrow-right">
                                                     </i>
                                                     </button>
+                                                    <button type="button"><a href="/updatePasswd">비밀번호변경하기</a>
+                                                        <i class="zmdi zmdi-arrow-right">
+                                                        </i>
+                                                    </button>
                                                 </form>
-                                                </div>
                                             </section>
                                         </div>
                                 </section>
