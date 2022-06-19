@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.NoticeDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
@@ -7,16 +8,13 @@
     String user_name = CmmUtil.nvl((String) session.getAttribute("SS_USER_NAME"));
     String admin = CmmUtil.nvl((String)session.getAttribute("SS_USER_TYPE"));
 
-    if (admin != null){
-
-    }
 %>
 <!DOCTYPE HTML>
 
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title>게시판 작성</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -63,18 +61,13 @@
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
                                     <li><a href="/weather">현재날씨조회</a></li>
-                                    <li><a href="/weather2">미래날씨조회</a></li>
+                                    <li><a href="weather2">미래날씨조회</a></li>
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>

@@ -53,13 +53,8 @@
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>

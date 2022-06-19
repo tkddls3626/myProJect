@@ -18,4 +18,5 @@ public class CarNoticeDTO {
     private String reg_dt; // 등록일
     private String chg_id; // 수정자 아이디
     private String chg_dt; // 수정일
+    private String admin_yn; // 관리자 권한 부여
 }

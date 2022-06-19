@@ -14,7 +14,8 @@
 			 	AGE,
 			 	SEX,
 			 	USER_ID,
-			 	TLV_INT
+			 	TLV_INT,
+			 	CAR_YN
 			)
 			VALUES(
 				   #{user_email},
@@ -23,7 +24,8 @@
 				   #{age},
 				   #{sex},
 				   #{user_id},
-			       #{tlv_int}
+			       #{tlv_int},
+			       #{car_yn}
 				  )
 	</insert>
 
@@ -51,30 +53,31 @@
 	<update id="updateUserPw" parameterType="UserInfoDTO">
 		UPDATE USER_INFO
 		SET PASSWORD = #{password}
-		WHERE USER_NAME = #{user_name} AND USER_EMAIL = #{user_email}
+		WHERE USER_EMAIL = #{user_email}
 	</update>
 
 	<!-- 유저 정보 변경  -->
 	<update id="UpdateUserPage" parameterType="UserInfoDTO">
 	UPDATE USER_INFO
-	SET USER_NAME = #{user_name},
-		USER_EMAIL = #{user_email},
-		AGE = #{age},
-		SEX = #{sex}
+	SET AGE = #{age},
+		SEX = #{sex},
+	    TLV_INT = #{tlv_int},
+	    CAR_YN = #{car_yn}
 	WHERE USER_EMAIL = #{user_email}
 	</update>
 
 	<!--사용자 마이페이지 정보가져오기 -->
 	<select  id="getUserInfo"  parameterType="UserInfoDTO" resultType="UserInfoDTO">
-	SELECT USER_NAME, PASSWORD, USER_EMAIL, AGE, SEX, TLV_INT
+	SELECT USER_NAME, PASSWORD, USER_EMAIL, AGE, SEX, TLV_INT, MANNER_INDEX, CAR_YN
 	FROM USER_INFO
 	WHERE USER_EMAIL = #{user_email}
 	</select>
 
 	<!-- 회원탈퇴  -->
-	<delete parameterType="UserInfoDTO" id="deleteUserInfo">
+	<delete id="deleteUserInfo" parameterType="UserInfoDTO">
 	DELETE FROM USER_INFO
-	WHERE USER_EMAIL = #{user_email} </delete>
+	WHERE USER_EMAIL = #{user_email}
+</delete>
 
 	<insert id="addFriend" parameterType="FriendDTO">
 		INSERT INTO FRIEND
@@ -100,13 +103,13 @@
 				 INNER JOIN yuDB.FRIEND B
 							ON A.user_seq = B.user_seq and B.RECEIVE_USER = #{receive_user}
 	</select>
-
+ <!-- 친구 값이 1이라면 친구목록에 보여주고 0이라면 친구신청목록에 보여줌-->
 	<update id="friendCheck" parameterType="FriendDTO">
 		UPDATE FRIEND
 		SET VALUE = 1
 		WHERE USER_SEQ = #{user_seq} AND RECEIVE_USER = #{receive_user}
 	</update>
-
+<!-- 친구값이 1이라면 이름  PK번호와 유저이름을 가져와서 비교하여 맞으면 1값으로 올려준다.-->
 	<select id="getFriendList2" parameterType="FriendDTO" resultType="UserInfoDTO">
 		SELECT
 			A.user_seq,
@@ -115,5 +118,32 @@
 		FROM yuDB.USER_INFO A
 				 INNER JOIN yuDB.FRIEND B
 							ON A.user_seq = B.user_seq and B.RECEIVE_USER = #{receive_user} and B.VALUE = 1
+	</select>
+	<!--친구 평가에서 나온 결과인 manner 저장-->
+	<!--쿼리문 수정
+	if manner_index != null = a.manner_index + b.manner_index / 2
+	if manner_index == null = manner_index = #{manner_index}
+	where user_email = #{user_email}
+		UPDATE USER_INFO
+			<set>
+				<if test="manner_index != null>
+	-->
+	<update id="insertManner" parameterType="UserInfoDTO">
+		UPDATE USER_INFO
+		SET MANNER_INDEX =
+		    (SELECT (U.MANNER_INDEX + #{manner_index} ) / 2 FROM USER_INFO U WHERE U.USER_EMAIL = #{user_email})
+		WHERE USER_EMAIL = #{user_email}
+	</update>
+
+	<!--친구 삭제하기-->
+	<delete id="friendDelete" parameterType="FriendDTO">
+		DELETE FROM FRIEND
+		WHERE USER_SEQ = #{user_seq} ANd RECEIVE_USER = #{receive_user}
+	</delete>
+
+	<!--대현이형 카카오톡 보내기 확인하기위해 나의 user_info 정보가져오기 -->
+	<select id="kakao" parameterType="UserInfoDTO" resultType="UserInfoDTO">
+		SELECT CAR_YN
+		FROM USER_INFO
 	</select>
 </mapper>

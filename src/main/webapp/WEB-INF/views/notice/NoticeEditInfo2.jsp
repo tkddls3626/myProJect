@@ -18,7 +18,7 @@
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title>게시판 수정</title>
     <script type="text/javascript">
 
         //상세보기 이동
@@ -114,18 +114,13 @@
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
                                     <li><a href="/weather">현재날씨조회</a></li>
-                                    <li><a href="/weather2">미래날씨조회</a></li>
+                                    <li><a href="weather2">미래날씨조회</a></li>
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
@@ -159,7 +154,7 @@
                                 </article>
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
-                                    <form action="/notice/NoticeUpdate" >
+                                    <form action="/notice/NoticeUpdate"  method="post">
                                         <label for="content"><h2>제목</h2></label>
                                         <input type="text" placeholder="<%=rDTO.getTitle()%>" id="title" name="title">
                                         <input type="hidden" name="nSeq" value="<%=rDTO.getNotice_seq()%>" />
@@ -173,14 +168,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="content"><h2>작성자</h2></label>
-                                            <input type="text" placeholder="<%=rDTO.getReg_id()%>"  id="chg_id" name="chg_id" class="form-control">
+                                            <input type="text" value="<%=rDTO.getReg_id()%>"  id="chg_id" name="chg_id" class="form-control" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="content"><h2>내용</h2></label>
                                             <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="<%=rDTO.getNotice_contents()%>"></textarea>
                                         </div>
                                         <button type ="button" onclick="location.href='/notice/NoticeList2'" id="morl3">취소</button>
-                                        <button type ="submit" id = "update">수정</button>
+                                        <button type ="submit" id = "NoticeUpdate">수정</button>
                                     </form>
                                 </section>
                             </div>

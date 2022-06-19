@@ -76,13 +76,8 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
@@ -127,6 +122,10 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                             <ul class="list-group mb-4">
                                                 <li class="list-group-item pt-5">
                                                     <h5>개인정보 확인</h5>
+                                                    <a onclick="location.href='/mypage'" class="btn btn-primary nofocus" role="button" style="width:15%; float: right;">
+                                                        <i class="fa-solid fa-arrow-right-arrow-left"></i></i>
+                                                        수정하기
+                                                    </a>
                                                     <hr>
                                                 </li>
                                                 <li class="list-group-item pt-3 pt-sm-4">

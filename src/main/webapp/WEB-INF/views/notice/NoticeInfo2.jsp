@@ -12,8 +12,6 @@
     String reg_id = (String) session.getAttribute("reg_id");
     List<NoticeDTO > rList = (List<NoticeDTO>) request.getAttribute("rList");
     String user_seq = CmmUtil.nvl((String)session.getAttribute("SS_USER_SEQ"));
-
-
 //공지글 정보를 못불러왔다면, 객체 생성
     if (rDTO == null) {
         rDTO = new NoticeDTO();
@@ -45,7 +43,7 @@
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title>게시판 상세보기</title>
     <script type="text/javascript">
         //수정하기
         function doEdit() {
@@ -152,18 +150,13 @@
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
                                     <li><a href="/weather">현재날씨조회</a></li>
-                                    <li><a href="/weather2">미래날씨조회</a></li>
+                                    <li><a href="weather2">미래날씨조회</a></li>
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
@@ -219,10 +212,20 @@
                                                         <i class="fa fa-eye" aria-hidden="true"></i><%=rDTO.getNotice_cnt()%>
                                                         <span class="sr-only">조회</span>
                                                     </li>
+                                                    <% if(rDTO.getNotice_good()==null){
+
+                                                        int notice_good = 0;
+
+                                                    %>
                                                     <li class="pr-3">
-                                                        <i class="fa fa-commenting-o" aria-hidden="true"></i><%=rDTO.getNotice_good()%>
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i><%=notice_good%>
                                                         <span class="sr-only">좋아요</span>
+                                                        <%
+                                                            }
+                                                        %>
                                                     </li>
+
+
                                                     <li id="bo_v_btn" class="d-none d-sm-block flex-sm-grow-1 text-right">
                                                         <!-- 게시물 상단 버튼 시작 { -->
 

@@ -60,20 +60,12 @@
 
                     <!-- Logo -->
                     <h1><a href="/index" id="logo">WEATHERTELLING</a></h1>
-
                     <!-- Nav -->
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/chat">채팅내역</a></li>
-                                    <li><a href="#">카카오톡 알림 신청</a></li>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
@@ -85,7 +77,6 @@
                             <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
                         </ul>
                     </nav>
-
                 </div>
             </header>
 
@@ -130,8 +121,8 @@
                                             </svg>
 
                                             <p class="card__weather__temp">온도 : <%=rList.get(0)%></p>
-                                            <p class="card__weather__temp">습도 : <%=rList.get(4)%></p>
-                                            <p class="card__weather__temp">강수확률 : <%=rList.get(5)%></p>
+                                            <p class="card__weather__temp">습도 : <%=rList.get(5)%></p>
+                                            <p class="card__weather__temp">강수확률 :<%=rList.get(4)%></p>
                                             <p class="card__weather__temp">풍속 : <%=rList.get(7)%></p>
                                             <p class="card__weather__temp">일일 최저기온 : <%=rList.get(2)%></p>
                                             <p class="card__weather__temp">일일 최고기온 : <%=rList.get(3)%></p>

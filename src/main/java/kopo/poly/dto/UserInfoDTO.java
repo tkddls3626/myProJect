@@ -18,6 +18,7 @@ public class UserInfoDTO {
     private String manner_index; // 매너지수
     private String REG_DT; // 가입일
     private String tlv_int; //관심지역
+    private String car_yn; //차량 유무
 
     //회원가입 중복 방지
     private String exists_yn;
