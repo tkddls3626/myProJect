@@ -22,10 +22,13 @@
 
 <html>
 <head>
-	<title>Aerial by HTML5 UP</title>
+	<title>로그인</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="/css/main2.css" />
+	<script type="text/javascript"></script>
+
+
 <style type="text/css">
 	@font-face {
 		src: url("/fonts/poppins/BMJUA_ttf.ttf");
@@ -59,7 +62,7 @@
 					<div class="card col-lg-4 mx-auto">
 						<div class="card-body px-5 py-5">
 							<br>
-							<form>
+							<form onsubmit="check();">
 								<div class="form-group">
 									<label>Email & ID</label>
 									<input type="text" class="form-control p_input" id="user_email" name="user_email" style="background-color: #0a0a0a">
@@ -124,10 +127,12 @@
 
 		let user_email = document.getElementById("user_email").value;
 		let password = document.getElementById("password").value;
+		let emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9] *[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
 		console.log("user_email : " + user_email);
 		console.log("passswod : " + password);
+		console.log("emailRegExp : " + emailRegExp);
 
-		let param = {"user_email" : user_email,"password" : password};
+		let param = {"user_email" : user_email,"password" : password, "emailRegExp" : emailRegExp };
 		/*유효성 검사*/
 		if (user_email===""){
 			alert("이메일을 입력하세요");
@@ -137,6 +142,12 @@
 		if (password===""){
 			alert("비빌번호를 입력하세요");
 			document.getElementsByName("password")[0].focus();
+			return false;
+		}
+		if (!emailRegExp.test(user_email)) {
+			alert("이메일 형식이 올바르지 않습니다");
+			form.user_email.value = "";
+			form.user_email.focus();
 			return false;
 		}
 

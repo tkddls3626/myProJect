@@ -58,13 +58,8 @@
                     <nav id="nav">
                         <ul>
                             <li class="current_page_item"><a href="/index">Home</a></li>
-                            <li>
-                                <a href="/mypage">마이페이지</a>
-                                <ul>
-                                    <li><a href="/mypage">내 정보 수정</a></li>
-                                    <li><a href="/mypageinfo">내 정보 확인</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/mypageinfo">내 정보 확인</a></li>
+
                             <li class="current_page_item">
                                 <a>날씨조회</a>
                                 <ul>
@@ -73,7 +68,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                             <button type="submit" class="btn btn-outline-secondary"><a href="/logout">로그아웃</a></button>
                         </ul>
                     </nav>

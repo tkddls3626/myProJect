@@ -13,7 +13,7 @@
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title>친구목록</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -81,7 +81,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 

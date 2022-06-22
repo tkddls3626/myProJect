@@ -19,6 +19,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/car.css" />
+    <script>
+
+
+    </script>
     <style type="text/css">
         @font-face {
             src: url("/fonts/poppins/BMJUA_ttf.ttf");
@@ -71,7 +75,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -107,38 +117,29 @@
                                         <section>
                                                 <div class="col-md-12">
                                                     <div class="col-md-4">
-                                                        <form action="/notice/NoticeInsert" >
-                                                            <div class="form-wrapper">
-                                                                <div class="row">
-                                                                    <label for="content"><h2>제목</h2></label>
-                                                                </div>
-                                                                <input type="text" placeholder="제목을 작성해주세요" id="title" name="title" class="form-control">
+                                                        <form id="f" action="/notice/NoticeInsert" onsubmit="return doSubmit(this);">
+                                                            <label for="content"><h2>제목</h2></label>
+                                                            <input type="text" placeholder="제목을 작성해 주세요!" id="title" name="title" required="required">
+                                                            <div class="form-group">
+                                                                <label for="content"><h2> 공지글여부 </h2></label>
+                                                                <<select name="notice_yn" id="notice_yn" " class="form-control" required="required">
+                                                                <option value="" disabled selected>공지글여부</option>
+                                                                <option value="Y">예</option>
+                                                                <option value="N">아니요</option>
+                                                            </select>
                                                             </div>
-                                                            <div class="form-wrapper">
-                                                                <div class="row">
-                                                                    <label for="content"><h2>공지글여부</h2></label>
-                                                                </div>
-                                                                <select name="notice_yn" id="notice_yn" class="form-control" >
-                                                                    <option value="" disabled selected>공지글여부</option>
-                                                                    <option value="Y">예</option>
-                                                                    <option value="N">아니요</option>
-                                                                </select>
+                                                            <div class="form-group">
+                                                                <label for="content"><h2>작성자</h2></label>
+                                                                <input type="text" value="<%=user_name%>" id="reg_id" name="reg_id"  class="form-control" readonly>
                                                             </div>
-                                                            <div class="form-wrapper">
-                                                                <div class="row">
-                                                                    <label for="content"><h2>작성자</h2></label>
-                                                                </div>
-                                                                    <input type="text" value="<%=user_name%>"  id="reg_id" name="reg_id" class="form-control" readonly>
-                                                            </div>
-                                                            <div class="form-wrapper">
-                                                                <div class="row">
+                                                            <div class="form-group">
                                                                 <label for="content"><h2>내용</h2></label>
-                                                                </div>
-                                                                <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="내용을 입력하세요"></textarea>
+                                                                <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="내용을 입력해주세요!" required="required"></textarea>
                                                             </div>
-                                                        <button type ="button" onclick="location.href='/notice/NoticeList2'" id="back">취소</button>
-                                                        <button type="submit" class="btn btn-primary" id="insert">등록</button>
+                                                            <button type ="button" onclick="location.href='/notice/NoticeList2'" id="back">취소</button>
+                                                            <button type="submit" class="btn btn-primary" id="insert" onclick="moveUrl()">등록</button>
                                                         </form>
+
                                                     </div>
                                                 </div>
                                         </section>
@@ -162,6 +163,3 @@
 </body>
 
 </html>
-<!--
-TODO 회원정보 수정 삭제 하기
-!-->

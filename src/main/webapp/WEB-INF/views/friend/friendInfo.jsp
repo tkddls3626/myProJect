@@ -18,7 +18,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title>친구목록</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -86,7 +86,13 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -117,7 +123,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
                                     <div class="register m-auto f-de">
-                                        <form id="fregisterform2">
+                                        <form id="fregisterform2" method="post">
                                             <ul class="list-group mb-4">
                                                 <li class="list-group-item pt-5">
                                                     <h5>개인정보 확인</h5>
@@ -131,11 +137,10 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                             <input type="text" value="<%=rDTO.getUser_email()%>" id="reg_mb_nick" required="" class="form-control nospace required" maxlength="20">
                                                         </div>
                                                         <div class="col-sm-6">
-
-                                                                    <a onclick="evalFriend()" class="btn btn-primary nofocus" role="button" style="width:30%;" data-toggle="modal" data-target="#exampleModalCenter">
-                                                                        <i class="fa fa-address-card" aria-hidden="true"></i>
-                                                                        평가하기
-                                                                    </a>
+                                                            <a onclick="evalFriend()" class="btn btn-primary nofocus" role="button" style="width:30%;" data-toggle="modal" data-target="#exampleModalCenter">
+                                                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                                                                평가하기
+                                                            </a>
                                                         </div>
                                                     </div>
 
@@ -213,38 +218,6 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<%--<script>--%>
-<%--    function friendCheck(user_seq) {--%>
-<%--        console.log("user_seq : " + user_seq);--%>
-<%--        console.log("receive_user : " + "<%=rDTO.getUser_name()%>");--%>
-<%--        /*user_seq가지고 UserInfo 테이블의 user_name 가져오기*/--%>
-<%--        $.ajax({--%>
-<%--            type: "GET", // get방식--%>
-<%--            url: "/user/friendCheck", // 파이썬으로 통신--%>
-<%--            data: {--%>
-<%--                "user_seq" : user_seq,--%>
-<%--                "receive_user" : '<%=rDTO.getUser_name()%>'--%>
-<%--            }, // area 데이터 값--%>
-<%--            contentType: "application/json; charset=utf-8", // json 인코딩--%>
-<%--            dataType: "text", //json타입--%>
-<%--            success(result) {--%>
-<%--                console.log(result);--%>
-<%--                swal({--%>
-<%--                    title : "친구 추가 완료",--%>
-<%--                    text : "확인 버튼을 눌러주세요.",--%>
-<%--                    icon : "success"--%>
-<%--                }).then(function() {--%>
-<%--                    window.location.href = '/mypageinfo';--%>
-<%--                });--%>
-<%--            },--%>
-<%--            error: (log) => {--%>
-<%--                alert("실패" + log)--%>
-<%--            }--%>
-
-<%--        })--%>
-<%--    }--%>
-
-<%--</script>--%>
 <%--model 창--%>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

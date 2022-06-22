@@ -300,7 +300,7 @@ but I would appreciate an attribution from my work. I hope you enjoy it.
             success(result) {
                 if(result === "success"){
                     alert("평가가 완료되었습니다.")
-                window.location.href = 'friendInfo?user_email=' + user_email + '&user_name=' + user_name;
+                window.location.href = '/mypageinfo';
                 }
             },
             error: (log) => {

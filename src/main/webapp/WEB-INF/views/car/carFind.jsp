@@ -63,7 +63,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -134,8 +140,6 @@
                 <div class="col-12">
                     <div id="copyright">
                         <ul class="menu">
-                            <li>&copy; Untitled. All rights reserved</li>
-                            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
                         </ul>
                     </div>
                 </div>

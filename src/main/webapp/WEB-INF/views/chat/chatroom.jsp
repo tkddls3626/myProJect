@@ -440,7 +440,7 @@ Inspired by https://dribbble.com/supahfunk
         }
         msg.value = '';
 
-    };
+    }
 
 </script>
 

@@ -19,55 +19,7 @@
 
 <head>
     <title>게시판 수정</title>
-    <script type="text/javascript">
-
-        //상세보기 이동
-        function doDetail(seq) {
-            location.href = "/notice/NoticeInfo?nSeq=" + seq;
-        }
-        //전송시 유효성 체크
-        function doSubmit(f){
-            if(f.title.value === ""){
-                alert("제목을 입력하시기 바랍니다.");
-                f.title.focus();
-                return false;
-            }
-
-            if(calBytes(f.title.value) > 200){
-                alert("최대 200Bytes까지 입력 가능합니다.");
-                f.title.focus();
-                return false;
-            }
-
-            var noticeCheck = false; //체크 여부 확인 변수
-
-            for(var i=0;i<f.noticeYn.length;i++){
-                if (f.noticeYn[i].checked){
-                    noticeCheck = true;
-                }
-            }
-
-            if(noticeCheck === false){
-                alert("공지글 여부를 선택하시기 바랍니다.");
-                f.noticeYn[0].focus();
-                return false;
-            }
-
-            if(f.contents.value === ""){
-                alert("내용을 입력하시기 바랍니다.");
-                f.contents.focus();
-                return false;
-            }
-
-            if(calBytes(f.contents.value) > 4000){
-                alert("최대 4000Bytes까지 입력 가능합니다.");
-                f.contents.focus();
-                return false;
-            }
-
-        }
-
-    </script>
+    <script type="text/javascript"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -109,7 +61,6 @@
 
                     <!-- Logo -->
                     <h1><a href="/index" id="logo">WEATHERTELLING</a></h1>
-
                     <!-- Nav -->
                     <nav id="nav">
                         <ul>
@@ -124,10 +75,15 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
-
                 </div>
             </header>
 
@@ -154,13 +110,13 @@
                                 </article>
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
-                                    <form action="/notice/NoticeUpdate"  method="post">
+                                    <form name="f" action="/notice/NoticeUpdate"  method="post" onsubmit="return doSubmit(this);">
                                         <label for="content"><h2>제목</h2></label>
-                                        <input type="text" placeholder="<%=rDTO.getTitle()%>" id="title" name="title">
+                                        <input type="text" placeholder="<%=rDTO.getTitle()%>" id="title" name="title" required="required">
                                         <input type="hidden" name="nSeq" value="<%=rDTO.getNotice_seq()%>" />
                                         <div class="form-group">
-                                            <label for="content"><h2>공지글여부</h2></label>
-                                            <<select name="noticeYn" id="noticeYn" class="form-control" >
+                                            <label for="content"><h2> 공지글여부 </h2></label>
+                                            <<select name="noticeYn" id="noticeYn" class="form-control" required="required">
                                             <option value="" disabled selected>공지글여부</option>
                                             <option value="Y">예</option>
                                             <option value="N">아니요</option>
@@ -172,7 +128,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="content"><h2>내용</h2></label>
-                                            <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="<%=rDTO.getNotice_contents()%>"></textarea>
+                                            <textarea class="form-control" id="notice_contents" name="notice_contents" placeholder="<%=rDTO.getNotice_contents()%>" required="required"></textarea>
                                         </div>
                                         <button type ="button" onclick="location.href='/notice/NoticeList2'" id="morl3">취소</button>
                                         <button type ="submit" id = "NoticeUpdate">수정</button>

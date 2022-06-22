@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>RegistrationForm_v1 by Colorlib</title>
+    <title>비밀번호찾기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- MATERIAL DESIGN ICONIC FONT -->
@@ -24,11 +24,11 @@
         <form action="/forget_passwd" method="post">
             <h3>PassWord Find Form</h3>
             <div class="form-wrapper">
-                <input type="text" placeholder="Username" class="form-control" required="required" name="user_name">
+                <input type="text" placeholder="Username" class="form-control" required="required" name="user_name" required="required">
                 <i class="zmdi zmdi-account"></i>
             </div>
             <div class="form-wrapper">
-                <input type="text" placeholder="Email Address" class="form-control"  required="required" name="user_email">
+                <input type="text" placeholder="Email Address" class="form-control"  required="required" name="user_email" required="required">
                 <i class="zmdi zmdi-email"></i>
 
             </div>

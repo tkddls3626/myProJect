@@ -165,7 +165,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -189,7 +195,7 @@
                                 <article class="container box feature1">
                                     <div>
                                         <header class="major">
-                                            <h2 style="margin: 0 0 0.5em 0;">공지사항 및 자유게시판</h2>
+                                            <h2 style="margin: 0 0 0.5em 0;">자유게시판</h2>
                                         </header>
                                     </div>
                                 </article>
@@ -203,12 +209,12 @@
 
                                                     <div class="divTableHeading">
                                                         <div class="divTableRow">
-                                                            <div class="divTableHead" id="" style="width: 10%;">번호</div>
-                                                            <div class="divTableHead" style="width: 40%;">제목</div>
-                                                            <div class="divTableHead" style="width: 10%;">작성자</div>
-                                                            <div class="divTableHead" style="width: 20%;">작성일</div>
-                                                            <div class="divTableHead" style="width: 10%;">조회</div>
-                                                            <div class="divTableHead" style="width: 10%;">좋아요</div>
+                                                            <div class="divTableHead" id="" style="width: 10%; text-align: center">번호</div>
+                                                            <div class="divTableHead" style="width: 40%; text-align: center">제목</div>
+                                                            <div class="divTableHead" style="width: 10%; text-align: center">작성자</div>
+                                                            <div class="divTableHead" style="width: 20%; text-align: center">작성일</div>
+                                                            <div class="divTableHead" style="width: 10%; text-align: center">조회</div>
+                                                            <div class="divTableHead" style="width: 10%; text-align: center">좋아요</div>
                                                         </div>
                                                     </div>
 
@@ -218,35 +224,27 @@
 
                                                             nSeq = rDTO.getNotice_seq();
 
-                                                            if (rDTO.getReg_id().equals("admin")) {
-
-                                                                change = "공지";
-
-                                                            }else {
-
                                                                 nSeq = rDTO.getNotice_seq();
-                                                                change = nSeq;
-                                                            }
 
                                                     %>
                                                     <div class="divTableBody">
 
                                                         <div class="divTableRow" >
                                                             <div class="divTableCell">
-                                                                <div>
-                                                                <a style="color: #ff00aa"><%=change%>
+                                                                <div style="text-align: center">
+                                                                <a style="color: #ff00aa"><%=nSeq%>
                                                                 </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="divTableCell">
+                                                            <div class="divTableCell" style="text-align: center">
                                                                 <a href="/notice/NoticeInfo2?nSeq=<%=nSeq%>">
                                                                 <%=rDTO.getTitle()%>
                                                                 </a>
                                                             </div>
-                                                            <div class="divTableCell"><%=rDTO.getReg_id()%></div>
-                                                            <div class="divTableCell"><%=rDTO.getReg_dt()%></div>
-                                                            <div class="divTableCell"><%=rDTO.getNotice_cnt()%></div>
-                                                            <div class="divTableCell"><%=rDTO.getNotice_good()%></div>
+                                                            <div class="divTableCell" style="text-align: center"><%=rDTO.getReg_id()%></div>
+                                                            <div class="divTableCell" style="text-align: center"><%=rDTO.getReg_dt()%></div>
+                                                            <div class="divTableCell" style="text-align: center"><%=rDTO.getNotice_cnt()%></div>
+                                                            <div class="divTableCell" style="text-align: center"><%=rDTO.getNotice_good()%></div>
                                                         </div>
                                                     </div>
                                                     <%

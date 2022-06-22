@@ -11,12 +11,21 @@
 <html>
 
 <head>
-    <title>Right Sidebar - ZeroFour by HTML5 UP</title>
+    <title></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/car.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" type="text/css">
+    <script>
+        function doSubmit(f) {
+            if (f.age.value().replace(/[^0-9]/g,"") === ""  ) {
+                alert("숫자만 입력해주세요!.");
+                f.age.focus();
+                return false;
+            }
+        }
+    </script>
     <style type="text/css">
         @font-face {
             src: url("/fonts/poppins/BMJUA_ttf.ttf");
@@ -69,7 +78,13 @@
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -103,15 +118,15 @@
                                         <h2><%=user_name%>님 의 내 정보 수정 페이지 입니다.</h2>
                                         <div class="col-4 col-12-medium">
                                             <section>
-                                                <form action="/UpdateMyPage" method="post">
+                                                <form id="f" action="/UpdateMyPage" method="post" onsubmit="return doSubmit(this);">
 
                                                     <div class="form-wrapper">
-                                                        <input type="text" placeholder="나이" id="age" name="age" class="form-control">
+                                                        <input type="text" placeholder="나이(숫자만 입력해주세요)" id="age" name="age" class="form-control" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>>
                                                         <i class="zmdi zmdi-email"></i>
 
                                                     </div>
                                                     <div class="form-wrapper">
-                                                        <select name="sex" id="sex" class="form-control" >
+                                                        <select name="sex" id="sex" class="form-control" required="required">
                                                             <option value="" disabled selected>Gender</option>
                                                             <option value="male">Male</option>
                                                             <option value="femal">Female</option>
@@ -121,7 +136,7 @@
 
                                                     </div>
                                                     <div class="form-wrapper">
-                                                        <select name="tlv_int" id="tlv_int" class="form-control" >
+                                                        <select name="tlv_int" id="tlv_int" class="form-control" required="required">
                                                             <option value="" disabled selected>관심지역설정</option>
                                                             <option value="seoul">서울시</option>
                                                             <option value="gangwondo">강원도</option>
@@ -138,7 +153,7 @@
 
                                                     </div>
                                                     <div class="form-wrapper">
-                                                        <select name="car_yn" id="car_yn" class="form-control" >
+                                                        <select name="car_yn" id="car_yn" class="form-control"  required="required">
                                                             <option value="" disabled selected>차량유무</option>
                                                             <option value="GET CAR">차량소지함</option>
                                                             <option value="NO CAR">차량없음</option>

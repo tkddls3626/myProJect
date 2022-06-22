@@ -86,7 +86,13 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                 </ul>
                             </li>
                             <li><a href="/carFind">차박여행지조회</a></li>
-                            <li><a href="/notice/NoticeList2">공지사항 및 자유게시판</a></li>
+                            <li class="current_page_item">
+                                <a>공지사항 및 게시판</a>
+                                <ul>
+                                    <li><a href="/notice/NoticeList2">자유게시판</a></li>
+                                    <li><a href="/board/BoardList">공지사항</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
 
@@ -118,7 +124,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                 <!-- Feature 1 -->
                                 <section class="container box feature1">
                                     <div class="register m-auto f-de">
-                                        <form id="fregisterform">
+                                        <div id="fregisterform">
                                             <ul class="list-group mb-4">
                                                 <li class="list-group-item pt-5">
                                                     <h5>개인정보 확인</h5>
@@ -145,7 +151,7 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                     <div class="form-group row">
                                                         <label class="col-sm-2" for="reg_mb_name">이름<strong class="sr-only">필수</strong></label>
                                                         <div class="col-sm-4">
-                                                            <input type="text" id="reg_mb_name" name="mb_name" value="<%=rDTO.getUser_name()%>" readonly="" class="form-control ">
+                                                            <input type="text" id="reg_mb_name" name="mb_name" value="<%=rDTO.getUser_name()%>" readonly="readonly" class="form-control ">
                                                         </div>
                                                     </div>
 
@@ -216,25 +222,31 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
                                                 <%for(int i=0; i<uList.size(); i++) {
                                                     if(uList.get(i).getValue().equals("1")) {
                                                 %>
-                                                <li class="list-group-item">이름: <%=uList.get(i).getUser_name()%>
-                                                    <a onclick="friendDelete('<%=uList.get(i).getUser_seq()%>', '<%=rDTO.getUser_name()%>')" class="btn btn-danger nofocus" role="button" style="margin-left: 15px;width:15%; float: right;">
-                                                        <i class="fa fa-trash-alt" aria-hidden="true"></i>
-                                                        친구삭제
-                                                    </a>
-                                                    <a onclick="location.href='/friendInfo?user_email=<%=uList.get(i).getUser_email()%>&user_name=<%=uList.get(i).getUser_name()%>'" class="btn btn-primary nofocus" role="button" style="width:15%; float: right;">
+
+
+                                                    <%--user_email/List.get(i).getUser_email(), user_name/uList.get(i).getUser_name(),--%>
+
+                                                    <form id="paging<%=i%>">
+                                                        <li class="list-group-item"  style="padding-bottom: 3%;">이름: <%=uList.get(i).getUser_name()%>
+                                                        <a onclick="friendDelete('<%=uList.get(i).getUser_seq()%>', '<%=rDTO.getUser_name()%>')" class="btn btn-danger nofocus" role="button" style="margin-left: 15px;width:15%; float: right;">
+                                                            <i class="fa fa-trash-alt" aria-hidden="true"></i>
+                                                            친구삭제
+                                                        </a>
+                                                        <input type="hidden" name="user_name" value="<%=uList.get(i).getUser_name()%>"/>
+                                                        <input type="hidden" name="user_email" value="<%=uList.get(i).getUser_email()%>"/>
+                                                    <a onclick="goPage(index=<%=i%>)" class="btn btn-primary nofocus" role="button" style="width:15%; float: right;">
                                                         <i class="fa fa-user-plus" aria-hidden="true"></i>
                                                         상세보기
                                                     </a>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     이메일: <%=uList.get(i).getUser_email()%>
+                                                    </form>
                                                 </li>
                                                 <%
                                                         }
                                                     }
                                                 %>
                                             </ul>
-                                        </form>
+                                        </div>
                                         <button class="btn btn-primary nofocus" style="float: right" onclick="location.href='/deleteUser'">회원탈퇴</button>
                                     </div>
                                 </section>
@@ -341,5 +353,16 @@ System.out.println("rDTO : " + rDTO.getTlv_int());
         });
     }
 
+</script>
+
+<%--post 전송--%>
+<script>
+    // content, cate, index를 인수로 받아 form 태그로 전송하는 함수
+    function goPage(index) {
+        var a = document.getElementById("paging" + index);
+        a.action = "/friendInfo";
+        a.method = "post"
+        a.submit();
+    }
 </script>
 </html>

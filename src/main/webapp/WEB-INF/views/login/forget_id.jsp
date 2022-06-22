@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>RegistrationForm_v1 by Colorlib</title>
+    <title>아이디찾기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- MATERIAL DESIGN ICONIC FONT -->
@@ -25,11 +25,11 @@
         <form action="/forget_id" method="post">
             <h3>Registration Form</h3>
             <div class="form-wrapper">
-                <input type="text" placeholder="Username" id="user_name" name="user_name" class="form-control">
+                <input type="text" placeholder="Username" id="user_name" name="user_name" class="form-control" required="required">
                 <i class="zmdi zmdi-account"></i>
             </div>
             <div class="form-wrapper">
-                <input type="text" placeholder="age" id="age" name="age" class="form-control">
+                <input type="text" placeholder="age" id="age" name="age" class="form-control" required="required">
                 <i class="zmdi zmdi-email"></i>
 
             </div>
