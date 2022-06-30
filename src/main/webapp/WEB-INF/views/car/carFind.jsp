@@ -161,7 +161,7 @@
         console.log("area : " + area);
         $.ajax({
             type: "GET", // get방식
-            url: "http://52.78.113.216:5002/carSearchAPI", // 파이썬으로 통신
+            url: "http://localhost:5002/carSearchAPI", // 파이썬으로 통신
             data: {
                 "area": area
             }, // area 데이터 값

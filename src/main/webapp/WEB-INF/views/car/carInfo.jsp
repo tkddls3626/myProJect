@@ -4,6 +4,8 @@
 
 <%
     List<String> rList = (List<String>) request.getAttribute("rList");
+    System.out.println(rList.get(6));
+    System.out.println(rList.get(7));
 %>
 <!DOCTYPE HTML>
 
@@ -35,6 +37,10 @@
         }
         h3{
             font-family: "jua";
+        }
+        img {
+            width: 90%;
+            height: 100%;
         }
 
     </style>
@@ -106,11 +112,13 @@
                                 <section class="container box feature1">
                                     <div class="row">
                                         <div class="col-12">
+                                            <div style="text-align: center; background-size: contain;">
                                             <img src="<%=rList.get(5)%>">
+                                            </div>
                                             <%for(int i=0; i<rList.size()-3; i++) {%>
                                             <h2><%=rList.get(i)%></h2>
                                             <%}%>
-                                            <div id="map" style="width:50%;height:400px; margin-left: auto; margin-right: auto;"></div>
+                                            <div id="map" style="width:70%;height:400px; margin-left: auto; margin-right: auto;"></div>
                                         </div>
                                         <div class="col-4 col-12-medium">
                                             <section>

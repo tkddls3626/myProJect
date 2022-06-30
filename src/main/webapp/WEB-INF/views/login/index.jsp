@@ -115,9 +115,9 @@
                         </div>
                         <div class="col-4 col-12-medium">
                             <section>
-                                <a href="<%=rList.get(12).get(2).substring(1,rList.get(12).get(2).length()-1)%>" class="image featured"><img src="<%=rList.get(12).get(1).substring(1,rList.get(12).get(1).length()-1)%>" alt="" /></a>
+                                <a href="<%=rList.get(11).get(2).substring(1,rList.get(11).get(2).length()-1)%>" class="image featured"><img src="<%=rList.get(11).get(1).substring(1,rList.get(11).get(1).length()-1)%>" alt="" /></a>
                                 <header class="second icon solid fa-user">
-                                    <h3><%=rList.get(12).get(0).substring(1, rList.get(12).get(0).length()-1)%></h3>
+                                    <h3><%=rList.get(11).get(0).substring(1, rList.get(11).get(0).length()-1)%></h3>
                                 </header>
                             </section>
                         </div>

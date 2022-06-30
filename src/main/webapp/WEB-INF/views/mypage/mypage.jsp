@@ -121,7 +121,7 @@
                                                 <form id="f" action="/UpdateMyPage" method="post" onsubmit="return doSubmit(this);">
 
                                                     <div class="form-wrapper">
-                                                        <input type="text" placeholder="나이(숫자만 입력해주세요)" id="age" name="age" class="form-control" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>>
+                                                        <input type="text" placeholder="나이(숫자만 입력해주세요)" id="age" name="age" class="form-control" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                                                         <i class="zmdi zmdi-email"></i>
 
                                                     </div>

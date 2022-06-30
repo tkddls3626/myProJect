@@ -122,7 +122,7 @@
                                                             <input type="text" placeholder="제목을 작성해 주세요!" id="title" name="title" required="required">
                                                             <div class="form-group">
                                                                 <label for="content"><h2> 공지글여부 </h2></label>
-                                                                <<select name="notice_yn" id="notice_yn" " class="form-control" required="required">
+                                                                <select name="notice_yn" id="notice_yn" " class="form-control" required="required">
                                                                 <option value="" disabled selected>공지글여부</option>
                                                                 <option value="Y">예</option>
                                                                 <option value="N">아니요</option>
