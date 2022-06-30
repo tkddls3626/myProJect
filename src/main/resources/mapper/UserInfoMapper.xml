@@ -90,7 +90,7 @@
 		VALUES (
 		    #{user_seq},
 		    #{receive_user},
-		    "0"
+		    0
 		)
 	</insert>
 	<select id="getFriendList" parameterType="FriendDTO" resultType="UserInfoDTO">
@@ -141,9 +141,5 @@
 		WHERE USER_SEQ = #{user_seq} ANd RECEIVE_USER = #{receive_user}
 	</delete>
 
-	<!--대현이형 카카오톡 보내기 확인하기위해 나의 user_info 정보가져오기 -->
-	<select id="kakao" parameterType="UserInfoDTO" resultType="UserInfoDTO">
-		SELECT CAR_YN
-		FROM USER_INFO
-	</select>
+
 </mapper>
